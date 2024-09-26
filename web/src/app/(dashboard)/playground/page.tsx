@@ -1,0 +1,16 @@
+"use client";
+import Options from "@/components/options";
+import { Editor } from "@/components/Editor";
+
+export const description =
+  "An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
+export default function Dashboard() {
+  return (
+    <main className="grid flex-1 overflow-auto p-4 md:grid-cols-2 bg-gray-50 lg:grid-cols-3">
+      <Options />
+      <div className="relative flex h-full min-h-[50vh] flex-col bg-gray-50 p-2 lg:col-span-2">
+        <Editor />
+      </div>
+    </main>
+  );
+}

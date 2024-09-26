@@ -1,0 +1,12 @@
+/*
+  Warnings:
+
+  - Changed the type of `version` on the `ApiKey` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
+
+*/
+-- CreateEnum
+CREATE TYPE "Verison" AS ENUM ('V1');
+
+-- AlterTable
+ALTER TABLE "ApiKey" DROP COLUMN "version",
+ADD COLUMN     "version" "Verison" NOT NULL;
