@@ -15,7 +15,7 @@ import {
 } from "@/store/slices/editor.slice";
 import { DEFAULT_THEME, DEFAULT_LANGUAGE } from "@/constants";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Loader, Play } from "lucide-react";
 import { Language, Theme } from "@/types";
 import axios from "axios";
 type SelectorProps = {
@@ -46,7 +46,7 @@ const Selector: React.FC<SelectorProps> = ({
 );
 
 export const EditorHeader: React.FC = () => {
-  const { theme, language, dispatch, code } = useEditor();
+  const { theme, language, dispatch, code, isLoading } = useEditor();
 
   const handleThemeChange = (value: string) => {
     dispatch(setTheme(value as Theme));
@@ -90,8 +90,14 @@ export const EditorHeader: React.FC = () => {
         onClick={() => runCode()}
         className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 flex items-center gap-2"
       >
-        <Play className="size-4" />
-        Run
+        {isLoading ? (
+          <Loader className="size-4 animate-spin" />
+        ) : (
+          <>
+            <Play className="size-4" />
+            Run
+          </>
+        )}
       </Button>
     </div>
   );
