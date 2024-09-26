@@ -1,0 +1,33 @@
+2024-09-21 21:38:08 [31merror[39m: connect ETIMEDOUT
+2024-09-21 21:38:10 [31merror[39m: getaddrinfo ENOTFOUND redis-1d9a097b-ajaysehwal000-0acb.a.aivencloud.com
+2024-09-21 21:48:47 [31merror[39m: Error in waitForJobAndCache:
+2024-09-21 21:49:54 [31merror[39m: Error in waitForJobAndCache:
+2024-09-21 21:51:02 [31merror[39m: Error in waitForJobAndCache:
+2024-09-21 21:54:36 [31merror[39m: Error in waitForJobAndCache:
+2024-09-22 11:18:06 [31merror[39m: Error: (HTTP code 409) container stopped/paused - container f22c39dc7b8be5c4f2f202fbc53e021a0ad4c528f6d128a8cc3a9aceb81610e1 is not running 
+2024-09-22 11:19:09 [31merror[39m: Error: (HTTP code 409) unexpected - Conflict. The container name "/testing" is already in use by container "f22c39dc7b8be5c4f2f202fbc53e021a0ad4c528f6d128a8cc3a9aceb81610e1". You have to remove (or rename) that container to be able to reuse that name. 
+2024-09-22 11:19:43 [31merror[39m: Error: (HTTP code 304) container already stopped -  
+2024-09-22 11:20:53 [31merror[39m: Error: (HTTP code 409) unexpected - Conflict. The container name "/testing" is already in use by container "f22c39dc7b8be5c4f2f202fbc53e021a0ad4c528f6d128a8cc3a9aceb81610e1". You have to remove (or rename) that container to be able to reuse that name. 
+2024-09-22 11:50:04 [31merror[39m: Error: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property '_httpMessage' -> object with constructor 'ClientRequest'
+    --- property 'socket' closes the circle
+2024-09-22 11:51:01 [31merror[39m: Error: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property '_httpMessage' -> object with constructor 'ClientRequest'
+    --- property 'socket' closes the circle
+2024-09-22 18:41:26 [31merror[39m: Error in waitForJobAndCache:
+2024-09-22 19:02:04 [31merror[39m: Could not close connections in time, forcefully shutting down
+2024-09-22 20:40:47 [31merror[39m: Error: ENOENT: no such file or directory, open 'C:\tmp\main.js'
+2024-09-22 20:48:44 [31merror[39m: Error: (HTTP code 404) no such container - Could not find the file /code/main.js in container b14909ae91a94ab1c4e25743a76fc74a799f0850e6a61ffbef56c1a6b5816cc1 
+2024-09-22 20:51:27 [31merror[39m: Error: ENOENT: no such file or directory, open 'C:\tmp\main.js'
+2024-09-22 20:51:36 [31merror[39m: Error: ENOENT: no such file or directory, open 'C:\tmp\main.js'
+2024-09-22 21:35:33 [31merror[39m: Error executing code: Error: (HTTP code 404) no such container - No such container: c5184859eeee1d40aec2e43f18aa86ededf229a445b764fba157726535cb8e49 
+2024-09-22 21:35:33 [31merror[39m: Error during cleanup: (HTTP code 404) no such container - No such container: c5184859eeee1d40aec2e43f18aa86ededf229a445b764fba157726535cb8e49 
+2024-09-23 15:27:11 [31merror[39m: read ECONNRESET
+2024-09-24 13:18:41 [31merror[39m: Error during container execution: connect ENOENT //./pipe/docker_engine
+2024-09-24 14:17:46 [31merror[39m: read ECONNRESET
+2024-09-24 15:00:10 [31merror[39m: read ECONNRESET
+2024-09-24 17:55:51 [31merror[39m: Error during container execution: connect ENOENT //./pipe/docker_engine
+2024-09-24 19:21:03 [31merror[39m: read ECONNRESET
+2024-09-24 20:11:22 [31merror[39m: read ECONNRESET
