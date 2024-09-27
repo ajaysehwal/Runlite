@@ -47,7 +47,7 @@ export class Sandbox {
     }
 
     const endTime = process.hrtime.bigint();
-    const executionTime = Number(endTime - startTime) / 1e6; // Convert to milliseconds
+    const executionTime = Number(endTime - startTime) / 1e6;
 
     return {
       status,

@@ -6,6 +6,7 @@ export interface Result {
   error?: string;
   executionTime?: number;
   resourceUsage?: ResourceUsage;
+  language?: number;
   exitCode?: number | null;
   signal?: NodeJS.Signals | null;
   killedBySystem?: boolean;
@@ -25,7 +26,28 @@ export interface Payload {
   syntax: string;
   lang: Language;
 }
-export type Language = "java" | "javascript" | "typescript" | "python" | "cpp";
+export type Language =
+  | "java"
+  | "javascript"
+  | "typescript"
+  | "python"
+  | "cpp"
+  | "php"
+  | "go"
+  | "rust"
+  | "ruby";
+
+export enum Extension {
+  python = "py",
+  javascript = "js",
+  java = "java",
+  cpp = "cpp",
+  go = "go",
+  typescript = "ts",
+  php = "php",
+  rust = "rust",
+  ruby = "rb",
+}
 export type Images =
   | "node:14"
   | "python:3.9-slim"

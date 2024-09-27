@@ -2,56 +2,109 @@ import fs from "fs/promises";
 import path from "path";
 import { log } from "../../services/logging";
 import { v4 as uuidv4 } from "uuid";
-import { Payload } from "../../types";
+import { Extension, Payload } from "../../types";
 import Docker from "dockerode";
 import { Language } from "../../types";
 import os from "os";
 import tar from "tar-fs";
+import { containerConfig } from "../../constants";
 interface ContainerConfig {
   image: string;
-  cmd: string;
-  fileName?: string;
+  cmd: (file: string, output?: string) => string[];
 }
 
 export class Containerizer {
-  private docker: Docker;
-  private CODE_DIR: string = "/code";
+  private readonly docker: Docker;
+  private readonly CODE_DIR: string = "/code";
+  private readonly TEMP_DIR: string = os.tmpdir();
   constructor() {
     this.docker = new Docker();
   }
   async start(payload: Payload) {
-    const fileId = uuidv4();
-    const extension = this.getFileExtension(payload.lang);
-    const file = `${fileId}.${extension}`;
+    const { lang, syntax } = payload;
+    const config = containerConfig[lang];
     let container: Docker.Container | null = null;
-    const containerConfig = this.getContainerConfig(payload.lang);
-    try {
-      await this.pullImage(containerConfig.image);
-      container = await this.docker.createContainer(
-        await this.createConfig(containerConfig.image, [
-          containerConfig.cmd,
-          file,
-        ])
-      );
-      const tempDir = os.tmpdir();
-      const tempPath = path.join(tempDir, file);
-      log.info(`File written successfully at: ${tempPath}`);
 
-      await fs.writeFile(tempPath, payload.syntax);
-      const tarStream = tar.pack(tempDir, {
-        entries: [file],
-      });
-      await container.putArchive(tarStream, { path: "/code" });
-      log.info("Code written to container");
-      await fs.unlink(tempPath);
+    try {
+      await this.pullImage(config.image);
+      const { file, output } = await this.prepareFile(lang, syntax);
+      container = await this.createContainer(config, file, output);
+      await this.writeCodeToContainer(container, file, syntax);
       return container;
     } catch (error) {
-      log.error(
-        `Error during container execution: ${(error as Error).message}`
-      );
+      await this.cleanupContainer(container);
       throw error;
     }
   }
+  private async prepareFile(
+    lang: Language,
+    syntax: string
+  ): Promise<{ file: string; output?: string }> {
+    const fileId = uuidv4();
+    const extension = Extension[lang];
+    let file = `${fileId}.${extension}`;
+    let output: string | undefined;
+    output = fileId;
+    if (lang === "java") {
+      const classNameRegex = /public\s+class\s+(\w+)/;
+      const match = syntax.match(classNameRegex);
+      if (match && match[1]) {
+        output = match[1];
+        file = `${output}.${extension}`;
+      }
+    }
+    return { file, output };
+  }
+  private async createContainer(
+    config: ContainerConfig,
+    file: string,
+    output?: string
+  ): Promise<Docker.Container> {
+    const containerConfig = await this.createContainerConfig(
+      config.image,
+      config.cmd(file, output)
+    );
+    return this.docker.createContainer(containerConfig);
+  }
+  private async createContainerConfig(
+    Image: string,
+    Cmd: string[]
+  ): Promise<Docker.ContainerCreateOptions> {
+    return {
+      Image,
+      Cmd,
+      HostConfig: {
+        Memory: 256 * 1024 * 1024,
+        CpuQuota: 100000,
+        NetworkMode: "none",
+      },
+      WorkingDir: this.CODE_DIR,
+      name: `sandbox-${uuidv4()}`,
+      Tty: false,
+      AttachStderr: true,
+      AttachStdout: true,
+    };
+  }
+  private async writeCodeToContainer(
+    container: Docker.Container,
+    file: string,
+    syntax: string
+  ): Promise<void> {
+    const tempPath = path.join(this.TEMP_DIR, file);
+    try {
+      await fs.writeFile(tempPath, syntax);
+      log.info(`File written successfully at: ${tempPath}`);
+
+      const tarStream = tar.pack(this.TEMP_DIR, { entries: [file] });
+      await container.putArchive(tarStream, { path: this.CODE_DIR });
+      log.info("Code written to container");
+    } finally {
+      await fs
+        .unlink(tempPath)
+        .catch((error) => log.error(`Error deleting temp file: ${error}`));
+    }
+  }
+
   async pullImage(image: string) {
     const images = await this.docker.listImages({
       filters: { reference: [image] },
@@ -71,59 +124,20 @@ export class Containerizer {
       log.info("Image found, use it directly...");
     }
   }
-  private async createConfig(Image: string, Cmd: string[]) {
-    return {
-      Image,
-      Cmd,
-      HostConfig: {
-        Memory: 256 * 1024 * 1024,
-        CpuQuota: 100000,
-        NetworkMode: "none",
-      },
-      WorkingDir: this.CODE_DIR,
-      name: `sandbox-${uuidv4()}`,
-      Tty: false,
-      AttachStderr: true,
-      AttachStdout: true,
-    };
-  }
-  private getContainerConfig(language: Language): ContainerConfig {
-    const configs: Record<Language, ContainerConfig> = {
-      java: {
-        image: "openjdk:17-slim",
-        cmd: "bash",
-      },
-      javascript: { image: "node:14", cmd: "node" },
-      typescript: {
-        image: "node:14",
-        cmd: "npx tsc && node",
-      },
-      python: { image: "python:3.9-slim", cmd: "python" },
-      cpp: {
-        image: "gcc:latest",
-        cmd: "bash",
-      },
-    };
 
-    const config = configs[language];
-    if (!config) {
-      throw new Error(`Unsupported language: ${language}`);
+  private async cleanupContainer(
+    container: Docker.Container | null
+  ): Promise<void> {
+    if (container) {
+      await container
+        .stop()
+        .catch((error) => log.error(`Error stopping container: ${error}`));
+      await container
+        .remove()
+        .catch((error) => log.error(`Error removing container: ${error}`));
     }
-    return config;
   }
 
-  private getFileExtension(language: string): string {
-    const extensions: { [key: string]: string } = {
-      python: "py",
-      javascript: "js",
-      java: "java",
-      cpp: "cpp",
-      go: "go",
-      csharp: "cs",
-      typescript: "ts",
-    };
-    return extensions[language.toLowerCase()] || "txt";
-  }
   async cleanup(filePath: string, compiledPath?: string): Promise<void> {
     try {
       await fs.unlink(filePath);

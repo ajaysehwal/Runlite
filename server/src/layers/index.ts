@@ -5,6 +5,7 @@ import { QueueLayer } from "./queue";
 import { Result, Payload, Language, ExecutionStatus } from "../types";
 import { Sandbox } from "./sandbox";
 import { Containerizer } from "./container";
+import { LanguageCode } from "../constants";
 
 export class Layers {
   private cacheLayer: CacheLayer;
@@ -64,11 +65,12 @@ export class Layers {
       }
       const sandbox = new Sandbox(container);
       const result = await sandbox.execute();
-      return { ...result };
+      return { ...result, language: LanguageCode[job.data.lang] };
     } catch (error) {
       return {
         status: ExecutionStatus.InternalError,
         error: (error as Error).message,
+        language: LanguageCode[job.data.lang],
       };
     }
   }

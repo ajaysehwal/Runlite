@@ -6,6 +6,7 @@ import { log } from "./services/logging";
 import http from "http";
 import { config } from "./config";
 import { routes } from "./manager/route.manager";
+import { Extension } from "./types";
 export class Server {
   private app: Application;
 
