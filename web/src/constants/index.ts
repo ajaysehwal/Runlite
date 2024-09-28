@@ -8,3 +8,5 @@ export const DEFAULT_LANGUAGE = [
   "php",
   "rust",
 ] as const;
+
+export const API_VERSIONS = ["v1", "v2"] as const;

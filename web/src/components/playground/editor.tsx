@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { EditorHeader } from "./header";
 import { useEditor } from "@/hooks/useEditor";
 import { setCode } from "@/store/slices/editor.slice";
 import { editor } from "monaco-editor";
@@ -14,7 +13,7 @@ export const Editor = () => {
 
   const editorOptions: editor.IStandaloneEditorConstructionOptions = {
     glyphMargin: true,
-    minimap: { enabled: true },
+    minimap: { enabled: false },
     hover: { enabled: true },
     scrollbar: { vertical: "hidden" as const },
     fontSize: 14,
@@ -22,13 +21,13 @@ export const Editor = () => {
     roundedSelection: false,
     selectOnLineNumbers: true,
     automaticLayout: true,
+    smoothScrolling: true,
   };
 
   return (
     <>
-      <EditorHeader />
       <MonacoEditor
-        height="78vh"
+        height="84vh"
         language={language}
         theme={theme}
         value={code}

@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 import * as monaco from "monaco-editor";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setUpMonaco } from "@/components/Editor/languages";
+import { setUpMonaco } from "@/components/languages";
 export const useEditor = () => {
   const dispatch = useDispatch();
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);

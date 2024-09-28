@@ -1,16 +1,59 @@
 "use client";
-import Options from "@/components/options";
-import { Editor } from "@/components/Editor";
 
-export const description =
-  "An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
-export default function Dashboard() {
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Editor, OutputBox, Header } from "@/components/playground";
+import {
+  ResizablePanel,
+  ResizableHandle,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+
+const Dashboard: React.FC = () => {
   return (
-    <main className="grid flex-1 overflow-auto p-4 md:grid-cols-2 bg-gray-50 lg:grid-cols-3">
-      <Options />
-      <div className="relative flex h-full min-h-[50vh] flex-col bg-gray-50 p-2 lg:col-span-2">
-        <Editor />
-      </div>
-    </main>
+    <div className="overflow-hidden bg-background h-full">
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel
+          defaultSize={70}
+          minSize={40}
+          maxSize={70}
+          className="flex flex-col relative"
+        >
+          <Header />
+
+          <motion.div
+            className="flex-grow overflow-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Editor />
+          </motion.div>
+        </ResizablePanel>
+
+        <AnimatePresence initial={false}>
+          <>
+            <ResizableHandle withHandle />
+            <ResizablePanel
+              defaultSize={30}
+              minSize={20}
+              maxSize={60}
+              className="relative"
+            >
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                exit={{ width: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <OutputBox />
+              </motion.div>
+            </ResizablePanel>
+          </>
+        </AnimatePresence>
+      </ResizablePanelGroup>
+    </div>
   );
-}
+};
+
+export default Dashboard;

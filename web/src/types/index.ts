@@ -36,5 +36,5 @@ export enum Status {
   MemoryLimitExceeded = "Memory Limit Exceeded",
   RuntimeError = "Runtime Error",
   InternalError = "Internal Error",
-  Idle = "idle",
+  Idle = "Idle",
 }
