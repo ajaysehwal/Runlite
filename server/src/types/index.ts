@@ -61,3 +61,7 @@ export enum ExecutionStatus {
   RuntimeError = "Runtime Error",
   InternalError = "Internal Error",
 }
+
+export enum versions {
+  "1.0.0",
+}
