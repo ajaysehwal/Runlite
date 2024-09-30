@@ -16,6 +16,7 @@ services:
       CONSOLE_LOGS : "true"
       ENCRYPTION_KEY : e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
       REDIS_HOST: redis
+      DATABASE_URL: postgresql://compyl:compylpass@postgres:5432/defaultdb
       REDIS_PORT: 6379
       REDIS_USERNAME : default
       REDIS_PASSWORD: RadheRadhe
@@ -27,6 +28,7 @@ services:
       KAFKA_BROKER: kafka:9092
     networks:
       - compyl-net
+    command: sh -c "npx prisma migrate dev --name init && yarn dev"
 
   redis:
     image: redis:latest
