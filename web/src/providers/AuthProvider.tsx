@@ -9,7 +9,7 @@ import { setAuth, clearAuth, setLoading } from "../store/slices/auth.slice";
 interface AuthProviderProps {
   children: React.ReactNode;
 }
-
+// handle auth state
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { dispatch } = useAuth();
 
