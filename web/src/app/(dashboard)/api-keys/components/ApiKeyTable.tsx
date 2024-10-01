@@ -1,6 +1,5 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ApiKey, Status } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Table,

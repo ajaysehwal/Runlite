@@ -1,4 +1,3 @@
-import { ApiKey, Version } from "@prisma/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import axios from "axios";

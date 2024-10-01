@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiKey } from "@prisma/client";
 import { getKeys, generateKey, deleteKey } from "../thunks/keys";
 
 interface KeysState {

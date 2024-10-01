@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { getKeys, deleteKey, generateKey } from "@/store/thunks/keys";
-import { Version } from "@prisma/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 
