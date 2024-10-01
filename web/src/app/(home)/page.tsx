@@ -51,7 +51,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <Code size={32} className="text-blue-600" />
-            <h1 className="text-2xl font-bold text-blue-600">CodeCompileAPI</h1>
+            <h1 className="text-2xl font-bold text-blue-600">Compyl</h1>
           </motion.div>
           <motion.div
             className="space-x-4"
@@ -339,7 +339,7 @@ export default function Home() {
       </main>
 
       <footer className="container mx-auto mt-32 py-8 text-center text-gray-600">
-        <p>&copy; 2024 CodeCompileAPI. All rights reserved.</p>
+        <p>&copy; 2024 Compyl. All rights reserved.</p>
       </footer>
     </div>
   );
