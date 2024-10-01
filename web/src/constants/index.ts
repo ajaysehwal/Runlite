@@ -1,3 +1,6 @@
+import { Status } from "@/types";
+import { Version } from "@prisma/client";
+
 export const DEFAULT_THEME = ["vs-dark", "light"] as const;
 export const DEFAULT_LANGUAGE = [
   "javascript",
@@ -10,3 +13,49 @@ export const DEFAULT_LANGUAGE = [
 ] as const;
 
 export const API_VERSIONS = ["v1", "v2"] as const;
+
+export const STATUS_CONFIG: Record<Status, { color: string; tooltip: string }> =
+  {
+    [Status.Idle]: { color: "bg-gray-400", tooltip: "Waiting to execute" },
+    [Status.Accepted]: {
+      color: "bg-green-500",
+      tooltip: "Code executed successfully",
+    },
+    [Status.TimeLimitExceeded]: {
+      color: "bg-yellow-500",
+      tooltip: "Execution time exceeded the limit",
+    },
+    [Status.MemoryLimitExceeded]: {
+      color: "bg-yellow-500",
+      tooltip: "Memory usage exceeded the limit",
+    },
+    [Status.RuntimeError]: {
+      color: "bg-red-500",
+      tooltip: "An error occurred during execution",
+    },
+    [Status.InternalError]: {
+      color: "bg-red-500",
+      tooltip: "An internal server error occurred",
+    },
+  } as const;
+
+export const INITIAL_LOAD_DELAY = 1000;
+export const COPY_TIMEOUT = 2000;
+
+export const apiVersions = [
+  {
+    value: Version.V1,
+    label: "Version 1",
+    description: "Stable release with basic features",
+  },
+  // {
+  //   value: "v2",
+  //   label: "Version 2",
+  //   description: "Enhanced performance and additional endpoints",
+  // },
+  // {
+  //   value: "v3",
+  //   label: "Version 3 (Beta)",
+  //   description: "Latest features, may have breaking changes",
+  // },
+] as const;

@@ -14,7 +14,7 @@ const getFirebaseToken = async () => {
 };
 
 const axiosInstance = axios.create({
-  baseURL: "/api/keys",
+  baseURL: "http://localhost:8001/key",
   headers: {
     "Content-Type": "application/json",
   },
@@ -66,7 +66,7 @@ export const deleteKey = createAsyncThunk<string, string>(
   "keys/delete",
   async (keyId, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/delete/${keyId}`);
+      await axiosInstance.delete(`/del/${keyId}`);
       return keyId;
     } catch (error) {
       return rejectWithValue(

@@ -46,10 +46,19 @@ export const Header: React.FC = () => {
   const runCode = async () => {
     dispatch(setLoading(true));
     try {
-      const { data } = await axios.post("http://localhost:8000/v1", {
-        syntax: code,
-        lang: language,
-      });
+      const { data } = await axios.post(
+        "http://localhost:8000/v1",
+        {
+          syntax: code,
+          lang: language,
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer ak_d169d700c1e350c68f5679ef61e39e003f6437984b72e4098b26d90046f1b638",
+          },
+        }
+      );
       dispatch(setResponse(data));
     } catch (error) {
       console.error("Error running code:", error);

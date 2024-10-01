@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Code, Braces, Settings, Copy, Check } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Code, Braces, Copy, Check } from "lucide-react";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useEditor } from "@/hooks/useEditor";
-import { Result, Status } from "@/types";
-import { API_VERSIONS } from "@/constants";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+import { Status } from "@/types";
+import { STATUS_CONFIG, COPY_TIMEOUT, INITIAL_LOAD_DELAY } from "@/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -23,6 +16,94 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
+
+SyntaxHighlighter.registerLanguage("json", json);
+
+interface StatusBadgeProps {
+  status: Status;
+}
+
+interface OutputContentProps {
+  content: string;
+  language: string;
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+  const { color, tooltip } = STATUS_CONFIG[status] || {
+    color: "bg-gray-500",
+    tooltip: "Unknown status",
+  };
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Badge
+            className={`capitalize ${color} transition-all duration-300 hover:opacity-80 text-xs`}
+          >
+            {status}
+          </Badge>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">{tooltip}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+const OutputContent: React.FC<OutputContentProps> = ({ content, language }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), COPY_TIMEOUT);
+  };
+
+  return (
+    <div className="relative">
+      <ScrollArea className="h-[82vh] w-full bg-[rgb(40,44,52)]">
+        <SyntaxHighlighter
+          language={language}
+          style={atomOneDark}
+          customStyle={{
+            backgroundColor: "transparent",
+            fontSize: "0.875rem",
+          }}
+          wrapLines={true}
+          lineProps={{
+            style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+          }}
+        >
+          {content}
+        </SyntaxHighlighter>
+      </ScrollArea>
+
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleCopy}
+        className="absolute top-0 right-0 text-gray-500 hover:bg-[rgb(40,44,52)] hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200"
+      >
+        {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+      </Button>
+    </div>
+  );
+};
+
+const OutputSkeleton: React.FC = () => (
+  <div className="space-y-2 p-4">
+    {[...Array(5)].map((_, index) => (
+      <Skeleton
+        key={index}
+        className={`h-4 w-${
+          ["full", "3/4", "5/6", "2/3", "4/5"][index]
+        } bg-gray-600`}
+      />
+    ))}
+  </div>
+);
 
 const LoadingAnimation: React.FC = () => (
   <div className="flex items-center justify-center space-x-1">
@@ -45,242 +126,88 @@ const LoadingAnimation: React.FC = () => (
   </div>
 );
 
-interface ApiSettingsProps {
-  apiVersion: string;
-  setApiVersion: (version: string) => void;
-}
-
-const ApiSettings: React.FC<ApiSettingsProps> = ({
-  apiVersion,
-  setApiVersion,
-}) => (
-  <motion.div
-    className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3"
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-  >
-    <div className="flex items-center mb-2">
-      <Settings className="w-4 h-4 mr-2 text-gray-600 dark:text-gray-300" />
-      <h2 className="text-sm font-semibold">API Settings</h2>
+const SkeletonHeader: React.FC = () => (
+  <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 px-4 py-2">
+    <div className="flex gap-2">
+      <Skeleton className="w-[74px] h-10 animate-pulse bg-gray-200" />
+      <Skeleton className="w-[74px] h-10 animate-pulse bg-gray-200" />
     </div>
-    <Label htmlFor="apiVersion" className="text-xs mb-1 block">
-      API Version
-    </Label>
-    <Select value={apiVersion} onValueChange={setApiVersion}>
-      <SelectTrigger id="apiVersion" className="w-full text-xs">
-        <SelectValue placeholder="Select API version" />
-      </SelectTrigger>
-      <SelectContent>
-        {API_VERSIONS.map((version) => (
-          <SelectItem key={version} value={version}>
-            {version}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  </motion.div>
+    <Skeleton className="w-12 h-6 animate-pulse bg-gray-200" />
+  </div>
 );
-
-const statusConfig = {
-  [Status.Idle]: {
-    color: "bg-gray-400",
-    tooltip: "Waiting to execute",
-  },
-  [Status.Accepted]: {
-    color: "bg-green-500",
-    tooltip: "Code executed successfully",
-  },
-  [Status.TimeLimitExceeded]: {
-    color: "bg-yellow-500",
-    tooltip: "Execution time exceeded the limit",
-  },
-  [Status.MemoryLimitExceeded]: {
-    color: "bg-yellow-500",
-    tooltip: "Memory usage exceeded the limit",
-  },
-  [Status.RuntimeError]: {
-    color: "bg-red-500",
-    tooltip: "An error occurred during execution",
-  },
-  [Status.InternalError]: {
-    color: "bg-red-500",
-    tooltip: "An internal server error occurred",
-  },
-};
-
-interface StatusBadgeProps {
-  status: Status;
-}
-
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  const { color, tooltip } = statusConfig[status] || {
-    color: "bg-gray-500",
-    tooltip: "Unknown status",
-  };
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <Badge
-            className={`capitalize ${color} transition-all duration-300 hover:opacity-80 text-xs`}
-          >
-            {status}
-          </Badge>
-        </TooltipTrigger>
-        <TooltipContent>{tooltip}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-interface OutputTabsProps {
-  result: Result;
-  isLoading: boolean;
-}
-
-const OutputTabs: React.FC<OutputTabsProps> = ({ result, isLoading }) => {
-  const [activeTab, setActiveTab] = useState("output");
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = (content: string) => {
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const renderContent = (content: string) => (
-    <ScrollArea className="h-[450px] w-full rounded-md relative">
-      {isLoading ? (
-        <div className="space-y-2 p-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-4 w-5/6" />
-        </div>
-      ) : (
-        <>
-          <motion.pre
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className={`text-sm whitespace-pre-wrap p-2 ${
-              result.stderr
-                ? "text-red-500"
-                : "text-gray-800 dark:text-gray-200"
-            }`}
-          >
-            <code>{content}</code>
-          </motion.pre>
-          <motion.div
-            className="absolute top-1 right-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleCopy(content)}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            >
-              {copied ? (
-                <Check className="w-3 h-3" />
-              ) : (
-                <Copy className="w-3 h-3" />
-              )}
-            </Button>
-          </motion.div>
-        </>
-      )}
-    </ScrollArea>
-  );
-
-  return (
-    <motion.div
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden h-full"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 px-3 py-2">
-        <div className="flex space-x-2">
-          <Button
-            variant={activeTab === "output" ? "secondary" : "ghost"}
-            size="sm"
-            onClick={() => setActiveTab("output")}
-            className="text-xs flex items-center"
-          >
-            <Code className="w-3 h-3 mr-1" />
-            Output
-          </Button>
-          <Button
-            variant={activeTab === "details" ? "secondary" : "ghost"}
-            size="sm"
-            onClick={() => setActiveTab("details")}
-            className="text-xs flex items-center"
-          >
-            <Braces className="w-3 h-3 mr-1" />
-            JSON
-          </Button>
-        </div>
-        <AnimatePresence>
-          {isLoading ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-            >
-              <LoadingAnimation />
-            </motion.div>
-          ) : (
-            <StatusBadge status={result.status} />
-          )}
-        </AnimatePresence>
-      </div>
-      <div className="h-[calc(100%-36px)]">
-        {activeTab === "output" &&
-          renderContent(
-            result.stdout || result.stderr || "No output available"
-          )}
-        {activeTab === "details" &&
-          renderContent(JSON.stringify(result, null, 2))}
-      </div>
-    </motion.div>
-  );
-};
 
 export const OutputBox: React.FC = () => {
   const { response, isLoading } = useEditor();
-  const [apiVersion, setApiVersion] = useState<string>(API_VERSIONS[0]);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsInitialLoading(false), 500);
+    const timer = setTimeout(() => setInitialLoad(false), INITIAL_LOAD_DELAY);
     return () => clearTimeout(timer);
   }, []);
 
-  if (isInitialLoading) {
-    return (
-      <div className="space-y-4 h-full">
-        <Skeleton className="h-[60px] w-full" />
-        <Skeleton className="h-[calc(100%-76px)] w-full" />
-      </div>
+  const renderContent = (content: string, language: string) =>
+    isLoading ? (
+      <OutputSkeleton />
+    ) : (
+      <OutputContent content={content} language={language} />
     );
-  }
 
   return (
     <motion.div
-      className="space-y-2 h-full"
+      className="bg-[rgb(40,44,52)] dark:bg-gray-800"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
     >
-      <ApiSettings apiVersion={apiVersion} setApiVersion={setApiVersion} />
-      <div className="h-[calc(100%-76px)]">
-        <OutputTabs result={response} isLoading={isLoading} />
-      </div>
+      <Tabs defaultValue="output" className="w-full">
+        {initialLoad ? (
+          <SkeletonHeader />
+        ) : (
+          <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 px-4 py-2">
+            <TabsList>
+              <TabsTrigger
+                value="output"
+                className="flex items-center data-[state=active]:bg-white data-[state=active]:shadow-sm"
+              >
+                <Code className="w-4 h-4 mr-2" />
+                Output
+              </TabsTrigger>
+              <TabsTrigger
+                value="details"
+                className="flex items-center data-[state=active]:bg-white data-[state=active]:shadow-sm"
+              >
+                <Braces className="w-4 h-4 mr-2" />
+                JSON
+              </TabsTrigger>
+            </TabsList>
+
+            {isLoading ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <LoadingAnimation />
+              </motion.div>
+            ) : (
+              <StatusBadge status={response.status} />
+            )}
+          </div>
+        )}
+
+        <div className="bg-[rgb(40,44,52)] dark:bg-gray-900 h-[82vh]">
+          <TabsContent value="output">
+            {renderContent(
+              response.stdout || response.stderr || "No output available",
+              "plaintext"
+            )}
+          </TabsContent>
+          <TabsContent value="details">
+            {renderContent(JSON.stringify(response, null, 2), "json")}
+          </TabsContent>
+        </div>
+      </Tabs>
     </motion.div>
   );
 };
