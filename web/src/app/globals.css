@@ -90,3 +90,18 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(20, end);
+}

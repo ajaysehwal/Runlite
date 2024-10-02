@@ -4,6 +4,7 @@ import "../globals.css";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { ReduxProvider } from "@/providers/reduxProvider";
+import { AuthProvider } from "@/providers/authProvider";
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <AuthProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+          </AuthProvider>
         </ReduxProvider>
       </body>
     </html>
