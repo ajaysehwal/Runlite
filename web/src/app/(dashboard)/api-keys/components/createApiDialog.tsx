@@ -20,6 +20,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { apiVersions } from "@/constants";
+import { Version } from "@/types/schema";
 
 interface CreateApiKeyDialogProps {
   open: boolean;

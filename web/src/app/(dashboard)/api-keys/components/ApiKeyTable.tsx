@@ -12,6 +12,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CheckCircle, XCircle, Trash2, Loader } from "lucide-react";
+import { ApiKey, Status } from "@/types/schema";
 
 interface ApiKeyTableProps {
   keys: ApiKey[];

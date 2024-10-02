@@ -1,6 +1,5 @@
 import { Status } from "@/types";
-import { Version } from "@prisma/client";
-
+import { Version } from "@/types/schema";
 export const DEFAULT_THEME = ["vs-dark", "light"] as const;
 export const DEFAULT_LANGUAGE = [
   "javascript",

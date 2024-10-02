@@ -1,21 +1,21 @@
-// Enums
+// export Enums
 
-enum Status {
+export enum Status {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }
 
-enum Version {
+export enum Version {
   V1 = "V1",
   V2 = "V2",
 }
 
-enum BillingInterval {
+export enum BillingInterval {
   MONTHLY = "MONTHLY",
   YEARLY = "YEARLY",
 }
 
-enum HttpMethod {
+export enum HttpMethod {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
@@ -23,21 +23,21 @@ enum HttpMethod {
   PATCH = "PATCH",
 }
 
-enum SubscriptionStatus {
+export enum SubscriptionStatus {
   ACTIVE = "ACTIVE",
   PAST_DUE = "PAST_DUE",
   CANCELED = "CANCELED",
   UNPAID = "UNPAID",
 }
 
-enum AuthProvider {
+export enum AuthProvider {
   GOOGLE = "GOOGLE",
   GITHUB = "GITHUB",
 }
 
-// Types
+// export Types
 
-type ApiKey = {
+export type ApiKey = {
   id: string;
   name?: string | null;
   description?: string | null;
@@ -46,7 +46,7 @@ type ApiKey = {
   version: Version;
   status: Status;
   rateLimit: number;
-  permissions?: unknown | null; // JSON type
+  permissions?: unknown | null; // JSON export type
   expiresAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -54,7 +54,7 @@ type ApiKey = {
   UsageRecord: UsageRecord[];
 };
 
-type BillingInfo = {
+export type BillingInfo = {
   id: string;
   userId: string;
   name: string;
@@ -67,7 +67,7 @@ type BillingInfo = {
   User: User;
 };
 
-type Subscription = {
+export type Subscription = {
   id: string;
   userId: string;
   planId: string;
@@ -81,13 +81,13 @@ type Subscription = {
   User: User;
 };
 
-type SubscriptionPlan = {
+export type SubscriptionPlan = {
   id: string;
   name: string;
   description?: string | null;
-  price: number; // assuming `Decimal` in Prisma refers to a number in TypeScript
+  price: number; // assuming `Decimal` in Prisma refers to a number in export TypeScript
   interval: BillingInterval;
-  features: unknown; // JSON type
+  features: unknown; // JSON export type
   maxApiKeys: number;
   maxRequestsPerDay: number;
   createdAt: Date;
@@ -95,7 +95,7 @@ type SubscriptionPlan = {
   Subscription: Subscription[];
 };
 
-type UsageRecord = {
+export type UsageRecord = {
   id: string;
   apiKeyId: string;
   endpoint: string;
@@ -106,7 +106,7 @@ type UsageRecord = {
   ApiKey: ApiKey;
 };
 
-type User = {
+export type User = {
   id: string;
   email: string;
   displayName?: string | null;
@@ -120,11 +120,11 @@ type User = {
   Subscription: Subscription[];
 };
 
-type AuditLog = {
+export type AuditLog = {
   id: string;
   userId: string;
   action: string;
-  details?: unknown | null; // JSON type
+  details?: unknown | null; // JSON export type
   createdAt: Date;
   User: User;
 };

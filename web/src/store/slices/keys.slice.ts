@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getKeys, generateKey, deleteKey } from "../thunks/keys";
+import { ApiKey } from "@/types/schema";
 
 interface KeysState {
   keys: ApiKey[];

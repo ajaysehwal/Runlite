@@ -1,3 +1,4 @@
+import { ApiKey, Version } from "@/types/schema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import axios from "axios";
