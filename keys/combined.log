@@ -15,3 +15,10 @@
 2024-10-01 14:58:32 [32minfo[39m: ::1 - - [01/Oct/2024:09:28:32 +0000] "POST /key/generate HTTP/1.1" 201 216 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-01 15:06:43 [32minfo[39m: ::1 - - [01/Oct/2024:09:36:43 +0000] "GET /key/get HTTP/1.1" 200 181 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-01 15:06:43 [32minfo[39m: ::1 - - [01/Oct/2024:09:36:43 +0000] "GET /key/get HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-02 15:53:13 [32minfo[39m: Logger initialized in development mode
+2024-10-02 15:53:15 [32minfo[39m: Logger initialized in development mode
+2024-10-02 15:53:15 [32minfo[39m: Worker 31476 running on port 8001
+2024-10-02 15:53:15 [32minfo[39m: Logger initialized in development mode
+2024-10-02 15:53:15 [32minfo[39m: Worker 28280 running on port 8001
+2024-10-02 15:53:20 [32minfo[39m: Server shutting down...
+2024-10-02 15:53:20 [32minfo[39m: Server shutting down...
