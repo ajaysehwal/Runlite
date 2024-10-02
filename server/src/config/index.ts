@@ -6,7 +6,7 @@ class Config {
     "REDIS_HOST",
     "REDIS_PORT",
     "REDIS_PASSWORD",
-    "NODE_ENV"
+    "NODE_ENV",
   ];
 
   static validateEnv() {
@@ -29,7 +29,8 @@ class Config {
         password: this.getEnvVariable("REDIS_PASSWORD"),
         username: this.getEnvVariable("REDIS_USERNAME"),
       },
-      node_env:this.getEnvVariable("NODE_ENV")
+      secretKey: this.getEnvVariable("ENCRYPTION_KEY"),
+      node_env: this.getEnvVariable("NODE_ENV"),
     };
   }
   static getEnvVariable(key: string, defaultValue?: string): string {
