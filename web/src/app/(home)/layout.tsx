@@ -3,8 +3,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { ReduxProvider } from "@/providers/reduxProvider";
-import { AuthProvider } from "@/providers/authProvider";
+import { ReduxProvider } from "@/providers/ReduxProvider";
+import { AuthProvider } from "@/providers/AuthProvider";
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
