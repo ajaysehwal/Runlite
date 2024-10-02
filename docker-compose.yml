@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+  # Main backend (code compilation server)
   backend:
     build: ./server
     container_name: compyl-server
@@ -30,6 +31,19 @@ services:
       - compyl-net
     command: sh -c "npx prisma migrate dev --name init && yarn dev"
 
+  # Keys Management Service
+  keys-server:
+    build: ./keys  # Assuming you have a keys management microservice in this directory
+    container_name: keys-server
+    ports:
+      - "8001:8001"
+    networks:
+      - compyl-net
+    environment:
+      PORT: 8080
+      NODE_ENV: development
+
+  # Redis service
   redis:
     image: redis:latest
     container_name: redis
@@ -39,6 +53,7 @@ services:
     networks:
       - compyl-net
 
+  # Postgres service
   postgres:
     image: postgres:latest 
     container_name: postgres
@@ -51,6 +66,7 @@ services:
     networks:
       - compyl-net
 
+  # Kafka service
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
@@ -66,6 +82,7 @@ services:
     networks:
       - compyl-net
 
+  # Zookeeper service
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
@@ -74,6 +91,20 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - compyl-net
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Use the custom Nginx config
+    depends_on:
+      - backend
+      - keys-server
     networks:
       - compyl-net
 
