@@ -13,8 +13,8 @@ import {
   Settings2,
   SquareTerminal,
   SquareUser,
-  Triangle,
 } from "lucide-react";
+import Logo from "./logo";
 
 interface NavItem {
   icon: React.ReactNode;
@@ -29,7 +29,11 @@ const mainNavItems: NavItem[] = [
     href: "/playground",
   },
 
-  { icon: <LockKeyhole className="size-5" />, label: "API Keys", href: "/api-keys" },
+  {
+    icon: <LockKeyhole className="size-5" />,
+    label: "API Keys",
+    href: "/api-keys",
+  },
   { icon: <Book className="size-5" />, label: "Documentation", href: "/docs" },
   {
     icon: <ChartNoAxesColumn className="size-5" />,
@@ -84,7 +88,7 @@ export default function Sidebar() {
       <div className="border-b p-2">
         <Button variant="outline" size="icon" aria-label="Home" asChild>
           <Link href="/">
-            <Triangle className="size-5 fill-foreground" />
+            <Logo />
           </Link>
         </Button>
       </div>

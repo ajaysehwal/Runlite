@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { ReduxProvider } from "@/providers/ReduxProvider";
+import { ReduxProvider } from "@/providers/RxProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 
