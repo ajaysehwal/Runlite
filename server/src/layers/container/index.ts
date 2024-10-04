@@ -18,7 +18,29 @@ export class Containerizer {
   private readonly CODE_DIR: string = "/code";
   private readonly TEMP_DIR: string = os.tmpdir();
   constructor() {
-    this.docker = new Docker();
+    const dockerHost =
+      process.env.DOCKER_HOST || "tcp://host.docker.internal:2375";
+
+    try {
+      if (dockerHost.startsWith("tcp://")) {
+        const url = new URL(dockerHost);
+        this.docker = new Docker({
+          host: url.hostname,
+          port: parseInt(url.port),
+        });
+      } else {
+        this.docker = new Docker({
+          socketPath: dockerHost,
+        });
+      }
+
+      log.info(`Initialized Docker connection with: ${dockerHost}`);
+    } catch (error) {
+      log.error(
+        `Failed to initialize Docker connection: ${(error as Error).message}`
+      );
+      throw error;
+    }
   }
   async start(payload: Payload) {
     const { lang, syntax } = payload;
@@ -76,13 +98,16 @@ export class Containerizer {
       HostConfig: {
         Memory: 256 * 1024 * 1024,
         CpuQuota: 100000,
-        NetworkMode: "none",
+        NetworkMode: "bridge",
       },
       WorkingDir: this.CODE_DIR,
       name: `sandbox-${uuidv4()}`,
       Tty: false,
       AttachStderr: true,
       AttachStdout: true,
+      ExposedPorts: {
+        "8000/tcp": {},
+      },
     };
   }
   private async writeCodeToContainer(
