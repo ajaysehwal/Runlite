@@ -15,6 +15,7 @@ export class v1 extends BaseRoute {
   protected initRoute() {
     this.router.post(
       this.path,
+      this.middleware.validateRequest,
       async (req: Request, res: Response, next: NextFunction) => {
         console.log(req.body);
         try {
@@ -31,7 +32,7 @@ export class v1 extends BaseRoute {
           }
 
           const result = await this.layers.startProcess({ syntax, lang });
-          
+
           res.status(200).send({ ...result });
         } catch (error) {
           next(error);

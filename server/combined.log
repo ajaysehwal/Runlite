@@ -3725,3 +3725,25 @@ now good
 2024-10-02 15:54:49 [32minfo[39m: Worker 31540 running on port 8000
 2024-10-02 15:54:52 [32minfo[39m: Server shutting down...
 2024-10-02 15:54:52 [32minfo[39m: Server shutting down...
+2024-10-04 15:21:32 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:21:35 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:21:36 [32minfo[39m: Worker 15340 running on port 8000
+2024-10-04 15:21:35 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:21:36 [32minfo[39m: Worker 8916 running on port 8000
+2024-10-04 15:21:43 [32minfo[39m: Task added to queue with ID: 45
+2024-10-04 15:21:43 [32minfo[39m: Job 45 progress: 10%
+2024-10-04 15:21:43 [32minfo[39m: Image found, use it directly...
+2024-10-04 15:21:46 [32minfo[39m: File written successfully at: C:\Users\ajays\AppData\Local\Temp\0f47704d-4106-4bb2-af07-179cf039c369.js
+2024-10-04 15:21:46 [32minfo[39m: Code written to container
+2024-10-04 15:21:53 [32minfo[39m: Container exited with code: 0
+2024-10-04 15:21:53 [32minfo[39m: Container stopped and removed
+2024-10-04 15:21:55 [32minfo[39m: Job 45 progress: 100%
+2024-10-04 15:21:55 [32minfo[39m: Completed job 45: {"status":"Accepted","stdout":"hello world\n","stderr":"","error":"","executionTime":7261.4407,"resourceUsage":{"memory":{"peak":0,"average":0},"cpu":{"peak":0,"average":0}},"exitCode":0,"signal":null,"killedBySystem":false,"metrics":{"compilationTime":0,"totalTime":7261.4407},"stats":{"read":"2024-10-04T09:51:51.573652009Z","preread":"2024-10-04T09:51:50.423596724Z","pids_stats":{"current":7},"blkio_stats":{"io_service_bytes_recursive":[],"io_serviced_recursive":[],"io_queue_recursive":[],"io_service_time_recursive":[],"io_wait_time_recursive":[],"io_merged_recursive":[],"io_time_recursive":[],"sectors_recursive":[]},"num_procs":0,"storage_stats":{},"cpu_stats":{"cpu_usage":{"total_usage":927341700,"percpu_usage":[532936500,394405200],"usage_in_kernelmode":170000000,"usage_in_usermode":110000000},"system_cpu_usage":10060670000000,"online_cpus":2,"throttling_data":{"periods":17,"throttled_periods":7,"throttled_time":545798700}},"precpu_stats":{"cpu_usage":{"total_usage":86338900,"percpu_usage":[1658100,84680800],"usage_in_kernelmode":30000000,"usage_in_usermode":50000000},"system_cpu_usage":10059450000000,"online_cpus":2,"throttling_data":{"periods":4,"throttled_periods":0,"throttled_time":0}},"memory_stats":{"usage":40062976,"max_usage":40189952,"stats":{"active_anon":4096,"active_file":2093056,"cache":32141312,"dirty":0,"hierarchical_memory_limit":268435456,"hierarchical_memsw_limit":536870912,"inactive_anon":6922240,"inactive_file":30048256,"mapped_file":25157632,"pgfault":3231,"pgmajfault":266,"pgpgin":9807,"pgpgout":778,"rss":6934528,"rss_huge":2097152,"total_active_anon":4096,"total_active_file":2093056,"total_cache":32141312,"total_dirty":0,"total_inactive_anon":6922240,"total_inactive_file":30048256,"total_mapped_file":25157632,"total_pgfault":3231,"total_pgmajfault":266,"total_pgpgin":9807,"total_pgpgout":778,"total_rss":6934528,"total_rss_huge":2097152,"total_unevictable":0,"total_writeback":0,"unevictable":0,"writeback":0},"limit":268435456},"networks":{"eth0":{"rx_bytes":606,"rx_packets":5,"rx_errors":0,"rx_dropped":0,"tx_bytes":0,"tx_packets":0,"tx_errors":0,"tx_dropped":0}}},"language":78}
+2024-10-04 15:21:57 [32minfo[39m: ::1 - - [04/Oct/2024:09:51:57 +0000] "POST /v1 HTTP/1.1" 200 2140 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-04 15:26:44 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:26:46 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:26:47 [32minfo[39m: Worker 13680 running on port 8000
+2024-10-04 15:26:46 [32minfo[39m: Logger initialized in development mode
+2024-10-04 15:26:47 [32minfo[39m: Worker 9132 running on port 8000
+2024-10-04 15:29:36 [32minfo[39m: Server shutting down...
+2024-10-04 15:29:36 [32minfo[39m: Server shutting down...

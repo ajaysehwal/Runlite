@@ -1,5 +1,6 @@
 import { PrismaClient, Version } from "@prisma/client";
 import { Crypto } from "../services/crypto";
+import { v4 as uuidv4 } from "uuid";
 
 export class KeysController {
   private crypto: Crypto;
@@ -25,7 +26,7 @@ export class KeysController {
     });
     await this.prisma.auditLog.create({
       data: {
-        id: userId,
+        id: parseInt(uuidv4()),
         userId: userId,
         action: "API_KEY_CREATED",
         details: { apiKeyId: newApiKey.id },
@@ -60,13 +61,12 @@ export class KeysController {
       where: {
         id,
         userId,
-        status: { not: "INACTIVE" },
       },
     });
 
     await this.prisma.auditLog.create({
       data: {
-        id: userId,
+        id: parseInt(uuidv4()),
         userId,
         action: "API_KEY_DELETED",
         details: { apiKeyId: id },
