@@ -1,25 +1,27 @@
 version: "3.8"
 services:
   # Main backend (code compilation server)
-  backend:
+  compiler:
     build: ./server
-    container_name: compyl-server
+    container_name: compiler
     ports:
       - "8000:8000"
+    volumes:
+      - //var/run/docker.sock:/var/run/docker.sock  # Windows path format
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - redis
       - postgres
-      - kafka
-      - zookeeper
     environment:
       PORT: 8000
       NODE_ENV: development
-      CONSOLE_LOGS : "true"
-      ENCRYPTION_KEY : e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
+      CONSOLE_LOGS: "true"
+      ENCRYPTION_KEY: e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
       REDIS_HOST: redis
       DATABASE_URL: postgresql://compyl:compylpass@postgres:5432/defaultdb
       REDIS_PORT: 6379
-      REDIS_USERNAME : default
+      REDIS_USERNAME: default
       REDIS_PASSWORD: RadheRadhe
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -27,21 +29,31 @@ services:
       POSTGRES_PASSWORD: compylpass
       POSTGRES_DB: defaultdb
       KAFKA_BROKER: kafka:9092
+      DOCKER_HOST: tcp://host.docker.internal:2375
     networks:
       - compyl-net
-    command: sh -c "npx prisma migrate dev --name init && yarn dev"
 
   # Keys Management Service
   keys-server:
-    build: ./keys  # Assuming you have a keys management microservice in this directory
+    build: ./keys # Assuming you have a keys management microservice in this directory
     container_name: keys-server
     ports:
-      - "8001:8001"
-    networks:
-      - compyl-net
+      - "8080:8080"
+    depends_on:
+      - redis
+      - postgres
     environment:
       PORT: 8080
       NODE_ENV: development
+      DATABASE_URL: postgresql://compyl:compylpass@postgres:5432/defaultdb
+      CONSOLE_LOGS: "true"
+      ENCRYPTION_KEY: e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: default
+      REDIS_PASSWORD: RadheRadhe
+    networks:
+      - compyl-net
 
   # Redis service
   redis:
@@ -55,7 +67,7 @@ services:
 
   # Postgres service
   postgres:
-    image: postgres:latest 
+    image: postgres:latest
     container_name: postgres
     environment:
       POSTGRES_USER: compyl
@@ -66,44 +78,15 @@ services:
     networks:
       - compyl-net
 
-  # Kafka service
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-    networks:
-      - compyl-net
-
-  # Zookeeper service
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - compyl-net
-
-  # Nginx reverse proxy
   nginx:
     image: nginx:latest
-    container_name: nginx-proxy
+    container_name: nginx-reverse-proxy
     ports:
-      - "80:80"
+      - "80:80"  # Expose HTTP on port 80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Use the custom Nginx config
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount your nginx.conf file
     depends_on:
-      - backend
+      - compiler
       - keys-server
     networks:
       - compyl-net
