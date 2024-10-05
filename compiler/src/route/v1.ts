@@ -17,7 +17,6 @@ export class v1 extends BaseRoute {
       this.path,
       this.middleware.validateRequest,
       async (req: Request, res: Response, next: NextFunction) => {
-        console.log(req.body);
         try {
           const { syntax, lang } = req.body as {
             syntax: string;
