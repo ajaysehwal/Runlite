@@ -14,7 +14,7 @@ import {
   SquareTerminal,
   SquareUser,
 } from "lucide-react";
-import Logo from "./logo";
+import { Logo } from "./logo";
 
 interface NavItem {
   icon: React.ReactNode;
