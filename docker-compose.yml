@@ -2,7 +2,7 @@ version: "3.8"
 services:
   # Main backend (code compilation server)
   compiler:
-    build: ./server
+    build: ./compiler
     container_name: compiler
     ports:
       - "8000:8000"
