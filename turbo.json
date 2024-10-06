@@ -1,0 +1,32 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+      "build": {
+        "dependsOn": ["^build"],
+        "outputs": [
+          "web/.next/**", 
+          "!web/.next/cache/**",
+          "compiler/dist/**", 
+          "keys/dist/**"
+        ]
+      },
+      "check-types": {
+        "dependsOn": ["^check-types"],
+        "inputs": [
+          "web/**/*.ts", 
+          "compiler/**/*.ts", 
+          "keys/**/*.ts"
+        ]
+      },
+      "dev": {
+        "persistent": true,
+        "cache": false,
+        "inputs": [
+          "web/**/*",
+          "compiler/**/*",
+          "keys/**/*"
+        ]
+      }
+    }
+  }
+  
