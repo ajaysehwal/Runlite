@@ -84,7 +84,7 @@ services:
     ports:
       - "80:80"  # Expose HTTP on port 80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount your nginx.conf file
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Mount your nginx.conf file
     depends_on:
       - compiler
       - keys-server
