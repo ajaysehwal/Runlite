@@ -14,7 +14,7 @@ const getFirebaseToken = async () => {
 };
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/key",
+  baseURL: process.env.NEXT_PUBLIC_KEYS_SERVER+"/key",
   headers: {
     "Content-Type": "application/json",
   },

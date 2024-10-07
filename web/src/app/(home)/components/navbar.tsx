@@ -96,7 +96,14 @@ export default function Navbar() {
           >
             <Link href="/" className="flex items-center">
               <Logo />
-              <h1 className="ml-2 text-2xl font-bold text-blue-600">Execify</h1>
+              <h1 className="font-sans text-4xl font-bold bg-gradient-to-r from-gray-600 to-gray-700 text-transparent bg-clip-text p-2 transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-800">
+                Run
+                <span className="relative">
+                  <span className="absolute top-1 left-0 text-sm text-blue-400 transform -rotate-12">
+                    Lite
+                  </span>
+                </span>
+              </h1>
             </Link>
           </motion.div>
 
