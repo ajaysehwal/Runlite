@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { log } from "../services/logging";
+import { Crypto } from "../services/crypto";
 export class Middleware {
   private prisma: PrismaClient;
+  private crypto: Crypto;
   constructor() {
     this.prisma = new PrismaClient();
+    this.crypto = new Crypto();
   }
   validateRequest = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -13,7 +16,7 @@ export class Middleware {
         res.status(401).json({ error: "Authorization header is missing" });
         return;
       }
-      const [scheme, key] = header?.split("");
+      const [scheme, key] = header.split(" ");
       if (scheme !== "Bearer" || !key) {
         res.status(401).json({
           error: "Invalid authorization header format",
@@ -22,9 +25,11 @@ export class Middleware {
         });
         return;
       }
+      const hashkey = await this.crypto.hashApiKey(key);
       const apikey = await this.prisma.apiKey.findUnique({
-        where: { key },
+        where: { key: hashkey },
       });
+
       if (!apikey) {
         res.status(404).json({ error: `API Key is Invalid ${key}` });
         return;

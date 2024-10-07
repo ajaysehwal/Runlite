@@ -3747,3 +3747,191 @@ now good
 2024-10-04 15:26:47 [32minfo[39m: Worker 9132 running on port 8000
 2024-10-04 15:29:36 [32minfo[39m: Server shutting down...
 2024-10-04 15:29:36 [32minfo[39m: Server shutting down...
+2024-10-06 19:06:16 [32minfo[39m: Logger initialized in development mode
+2024-10-06 19:06:17 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 19:06:23 [32minfo[39m: Worker 2872 died
+2024-10-06 19:06:24 [32minfo[39m: Worker 13664 died
+2024-10-06 19:06:28 [32minfo[39m: Worker 3504 died
+2024-10-06 19:06:29 [32minfo[39m: Worker 12240 died
+2024-10-06 19:06:32 [32minfo[39m: Worker 1440 died
+2024-10-06 19:06:33 [32minfo[39m: Worker 12940 died
+2024-10-06 19:06:36 [32minfo[39m: Worker 2520 died
+2024-10-06 19:06:37 [32minfo[39m: Worker 13852 died
+2024-10-06 19:06:40 [32minfo[39m: Worker 4320 died
+2024-10-06 19:06:41 [32minfo[39m: Worker 8616 died
+2024-10-06 19:06:43 [32minfo[39m: Worker 15204 died
+2024-10-06 19:06:44 [32minfo[39m: Worker 2288 died
+2024-10-06 19:06:47 [32minfo[39m: Worker 2796 died
+2024-10-06 19:06:48 [32minfo[39m: Worker 3972 died
+2024-10-06 19:06:51 [32minfo[39m: Worker 12456 died
+2024-10-06 19:06:52 [32minfo[39m: Worker 14684 died
+2024-10-06 19:06:56 [32minfo[39m: Worker 9864 died
+2024-10-06 19:06:57 [32minfo[39m: Worker 8316 died
+2024-10-06 19:07:01 [32minfo[39m: Worker 12420 died
+2024-10-06 19:07:02 [32minfo[39m: Worker 5408 died
+2024-10-06 19:07:06 [32minfo[39m: Worker 13936 died
+2024-10-06 19:07:07 [32minfo[39m: Worker 10688 died
+2024-10-06 19:07:11 [32minfo[39m: Worker 1300 died
+2024-10-06 19:07:11 [32minfo[39m: Worker 4320 died
+2024-10-06 19:07:14 [32minfo[39m: Worker 7104 died
+2024-10-06 19:07:15 [32minfo[39m: Worker 7292 died
+2024-10-06 19:07:17 [32minfo[39m: Worker 12456 died
+2024-10-06 19:07:20 [32minfo[39m: Worker 492 died
+2024-10-06 19:07:24 [32minfo[39m: Worker 13636 died
+2024-10-06 19:07:26 [32minfo[39m: Worker 8372 died
+2024-10-06 19:07:28 [32minfo[39m: Worker 13172 died
+2024-10-06 19:07:29 [32minfo[39m: Worker 6968 died
+2024-10-06 19:07:32 [32minfo[39m: Worker 10524 died
+2024-10-06 19:07:34 [32minfo[39m: Worker 8272 died
+2024-10-06 19:07:35 [32minfo[39m: Worker 14404 died
+2024-10-06 19:07:38 [32minfo[39m: Worker 4336 died
+2024-10-06 19:07:40 [32minfo[39m: Worker 14368 died
+2024-10-06 19:07:42 [32minfo[39m: Worker 9988 died
+2024-10-06 19:07:43 [32minfo[39m: Worker 3848 died
+2024-10-06 19:07:45 [32minfo[39m: Worker 14392 died
+2024-10-06 19:07:46 [32minfo[39m: Worker 2252 died
+2024-10-06 19:07:49 [32minfo[39m: Worker 15168 died
+2024-10-06 19:07:49 [32minfo[39m: Worker 8340 died
+2024-10-06 19:07:52 [32minfo[39m: Worker 14212 died
+2024-10-06 19:07:52 [32minfo[39m: Worker 10744 died
+2024-10-06 19:07:55 [32minfo[39m: Worker 13756 died
+2024-10-06 19:07:56 [32minfo[39m: Worker 8844 died
+2024-10-06 19:07:58 [32minfo[39m: Worker 9044 died
+2024-10-06 19:08:00 [32minfo[39m: Worker 7428 died
+2024-10-06 19:08:03 [32minfo[39m: Worker 15324 died
+2024-10-06 19:08:04 [32minfo[39m: Worker 13688 died
+2024-10-06 19:08:09 [32minfo[39m: Worker 14740 died
+2024-10-06 19:08:07 [32minfo[39m: Logger initialized in development mode
+2024-10-06 19:08:09 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 19:08:09 [31merror[39m: Uncaught Exception: bind EADDRINUSE null:8000
+2024-10-06 19:08:09 [32minfo[39m: Worker 9700 died
+2024-10-06 19:08:14 [32minfo[39m: Worker 13204 died
+2024-10-06 19:08:15 [32minfo[39m: Worker 13472 died
+2024-10-06 19:08:20 [32minfo[39m: Worker 1316 died
+2024-10-06 19:08:22 [32minfo[39m: Worker 5540 died
+2024-10-06 19:08:28 [32minfo[39m: Worker 11580 died
+2024-10-06 19:08:29 [32minfo[39m: Worker 2872 died
+2024-10-06 19:08:32 [32minfo[39m: Worker 13204 died
+2024-10-06 19:08:33 [32minfo[39m: Worker 11188 died
+2024-10-06 19:08:35 [32minfo[39m: Worker 1592 died
+2024-10-06 19:08:36 [32minfo[39m: Worker 12448 died
+2024-10-06 19:08:38 [32minfo[39m: Worker 13036 died
+2024-10-06 19:08:40 [32minfo[39m: Worker 8680 died
+2024-10-06 19:08:41 [32minfo[39m: Worker 15220 died
+2024-10-06 19:08:43 [32minfo[39m: Worker 14036 died
+2024-10-06 19:08:44 [32minfo[39m: Worker 2936 died
+2024-10-06 19:08:46 [32minfo[39m: Worker 6612 died
+2024-10-06 19:08:47 [32minfo[39m: Worker 12432 died
+2024-10-06 19:08:49 [32minfo[39m: Worker 13596 died
+2024-10-06 19:08:51 [32minfo[39m: Worker 7736 died
+2024-10-06 19:08:53 [32minfo[39m: Worker 6344 died
+2024-10-06 19:08:54 [32minfo[39m: Worker 15132 died
+2024-10-06 19:08:57 [32minfo[39m: Worker 5720 died
+2024-10-06 19:08:57 [32minfo[39m: Worker 5204 died
+2024-10-06 19:09:01 [32minfo[39m: Worker 12068 died
+2024-10-06 19:09:02 [32minfo[39m: Worker 13780 died
+2024-10-06 19:10:13 [32minfo[39m: Logger initialized in development mode
+2024-10-06 19:10:15 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 19:10:17 [32minfo[39m: Logger initialized in development mode
+2024-10-06 19:10:18 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 19:10:19 [32minfo[39m: Worker 15292 running on port 8000
+2024-10-06 19:10:17 [32minfo[39m: Logger initialized in development mode
+2024-10-06 19:10:19 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 19:10:19 [32minfo[39m: Worker 13984 running on port 8000
+2024-10-06 19:11:11 [32minfo[39m: Server shutting down...
+2024-10-06 19:11:11 [32minfo[39m: Server shutting down...
+2024-10-06 20:52:46 [32minfo[39m: Logger initialized in development mode
+2024-10-06 20:52:48 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 20:52:56 [32minfo[39m: Logger initialized in development mode
+2024-10-06 20:52:59 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 20:53:02 [32minfo[39m: Worker 15796 running on port 8000
+2024-10-06 20:52:56 [32minfo[39m: Logger initialized in development mode
+2024-10-06 20:52:59 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-06 20:53:03 [32minfo[39m: Worker 13996 running on port 8000
+2024-10-06 21:02:12 [32minfo[39m: ::1 - - [06/Oct/2024:15:32:12 +0000] "POST /v1 HTTP/1.1" 404 98 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-06 21:02:51 [32minfo[39m: ::1 - - [06/Oct/2024:15:32:51 +0000] "POST /v1 HTTP/1.1" 404 98 "http://localhost:3000/" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36"
+2024-10-06 21:05:17 [32minfo[39m: Server shutting down...
+2024-10-06 21:05:17 [32minfo[39m: Server shutting down...
+2024-10-07 10:14:13 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:14:14 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:14:15 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:14:15 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:14:16 [32minfo[39m: Worker 15780 running on port 8000
+2024-10-07 10:14:15 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:14:15 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:14:16 [32minfo[39m: Worker 9488 running on port 8000
+2024-10-07 10:14:51 [32minfo[39m: Server shutting down...
+2024-10-07 10:14:51 [32minfo[39m: Server shutting down...
+2024-10-07 10:15:47 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:15:51 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:15:53 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:15:54 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:15:55 [32minfo[39m: Worker 9112 running on port 8000
+2024-10-07 10:15:53 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:15:55 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:15:55 [32minfo[39m: Worker 17324 running on port 8000
+2024-10-07 10:15:59 [32minfo[39m: Server shutting down...
+2024-10-07 10:15:59 [32minfo[39m: Server shutting down...
+2024-10-07 10:17:15 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:17:17 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:17:19 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:17:21 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:17:21 [32minfo[39m: Worker 9192 running on port 8000
+2024-10-07 10:17:19 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:17:21 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:17:21 [32minfo[39m: Worker 7412 running on port 8000
+2024-10-07 10:21:01 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:21:03 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:21:06 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:21:08 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:21:08 [32minfo[39m: Worker 15924 running on port 8000
+2024-10-07 10:21:07 [32minfo[39m: Logger initialized in development mode
+2024-10-07 10:21:08 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 10:21:09 [32minfo[39m: Worker 16068 running on port 8000
+2024-10-07 10:21:46 [32minfo[39m: ::1 - - [07/Oct/2024:04:51:46 +0000] "POST /v1 HTTP/1.1" 404 98 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07 10:29:00 [32minfo[39m: Server shutting down...
+2024-10-07 10:29:00 [32minfo[39m: Server shutting down...
+2024-10-07 11:49:04 [32minfo[39m: Logger initialized in development mode
+2024-10-07 11:49:05 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 11:49:05 [32minfo[39m: Logger initialized in development mode
+2024-10-07 11:49:06 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 11:49:06 [32minfo[39m: Worker 13108 running on port 8000
+2024-10-07 11:49:06 [32minfo[39m: Logger initialized in development mode
+2024-10-07 11:49:06 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 11:49:06 [32minfo[39m: Worker 10508 running on port 8000
+2024-10-07 12:02:31 [32minfo[39m: ::1 - - [07/Oct/2024:06:32:31 +0000] "POST /v1 HTTP/1.1" 404 98 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07 12:04:12 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:04:15 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:04:53 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:04:54 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:04:55 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:04:55 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:04:56 [32minfo[39m: Worker 7068 running on port 8000
+2024-10-07 12:04:55 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:04:55 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:04:56 [32minfo[39m: Worker 14656 running on port 8000
+2024-10-07 12:05:02 [32minfo[39m: Task added to queue with ID: 46
+2024-10-07 12:05:02 [32minfo[39m: Job 46 progress: 10%
+2024-10-07 12:05:05 [32minfo[39m: Job 46 progress: 100%
+2024-10-07 12:05:05 [32minfo[39m: Completed job 46: {"status":"Internal Error","error":"connect ECONNREFUSED 192.168.101.12:2375","language":78}
+2024-10-07 12:05:06 [32minfo[39m: ::1 - - [07/Oct/2024:06:35:06 +0000] "POST /v1 HTTP/1.1" 200 92 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07 12:06:12 [32minfo[39m: Task added to queue with ID: 47
+2024-10-07 12:06:12 [32minfo[39m: Job 47 progress: 10%
+2024-10-07 12:06:14 [32minfo[39m: Job 47 progress: 100%
+2024-10-07 12:06:15 [32minfo[39m: Completed job 47: {"status":"Internal Error","error":"connect ECONNREFUSED 192.168.101.12:2375","language":78}
+2024-10-07 12:06:16 [32minfo[39m: ::1 - - [07/Oct/2024:06:36:16 +0000] "POST /v1 HTTP/1.1" 200 92 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07 12:06:29 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:06:31 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:06:33 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:06:34 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:06:34 [32minfo[39m: Worker 14684 running on port 8000
+2024-10-07 12:06:33 [32minfo[39m: Logger initialized in development mode
+2024-10-07 12:06:34 [32minfo[39m: Initialized Docker connection with: tcp://host.docker.internal:2375
+2024-10-07 12:06:34 [32minfo[39m: Worker 380 running on port 8000
+2024-10-07 12:06:42 [32minfo[39m: Task added to queue with ID: 48
+2024-10-07 12:06:42 [32minfo[39m: Job 48 progress: 10%
+2024-10-07 12:06:44 [32minfo[39m: Job 48 progress: 100%
+2024-10-07 12:06:44 [32minfo[39m: Completed job 48: {"status":"Internal Error","error":"connect ECONNREFUSED 192.168.101.12:2375","language":78}
+2024-10-07 12:06:44 [32minfo[39m: ::1 - - [07/Oct/2024:06:36:44 +0000] "POST /v1 HTTP/1.1" 200 92 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07 12:07:10 [32minfo[39m: Server shutting down...
+2024-10-07 12:07:10 [32minfo[39m: Server shutting down...

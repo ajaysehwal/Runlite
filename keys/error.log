@@ -1,0 +1,84 @@
+2024-10-06 21:04:46 [31merror[39m: PrismaClientValidationError: 
+Invalid `this.prisma.auditLog.create()` invocation in
+C:\Users\ajays\code\Execify\keys\dist\controllers\keys.controller.js:78:40
+
+  75         userId,
+  76     },
+  77 });
+→ 78 yield this.prisma.auditLog.create({
+       data: {
+         id: NaN,
+         userId: "9LseAKQsV3bv4839cuoqYqQNUEH3",
+         action: "API_KEY_DELETED",
+         details: {
+           apiKeyId: "cm1q8kmag0001cvesu3p6tr3u"
+         },
+     +   User: {
+     +     create: UserCreateWithoutAuditLogInput | UserUncheckedCreateWithoutAuditLogInput,
+     +     connectOrCreate: UserCreateOrConnectWithoutAuditLogInput,
+     +     connect: UserWhereUniqueInput
+     +   }
+       }
+     })
+
+Argument `User` is missing.
+    at Dn (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:114:8082)
+    at Mn.handleRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7396)
+    at Mn.handleAndLogRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:130:9633)
+2024-10-07 10:22:12 [31merror[39m: PrismaClientValidationError: 
+Invalid `this.prisma.auditLog.create()` invocation in
+C:\Users\ajays\code\Execify\keys\dist\controllers\keys.controller.js:78:40
+
+  75         userId,
+  76     },
+  77 });
+→ 78 yield this.prisma.auditLog.create({
+       data: {
+         id: NaN,
+         userId: "9LseAKQsV3bv4839cuoqYqQNUEH3",
+         action: "API_KEY_DELETED",
+         details: {
+           apiKeyId: "cm1yj8uqq000112f1omo3ogx5"
+         },
+     +   User: {
+     +     create: UserCreateWithoutAuditLogInput | UserUncheckedCreateWithoutAuditLogInput,
+     +     connectOrCreate: UserCreateOrConnectWithoutAuditLogInput,
+     +     connect: UserWhereUniqueInput
+     +   }
+       }
+     })
+
+Argument `User` is missing.
+    at Dn (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:114:8082)
+    at Mn.handleRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7396)
+    at Mn.handleAndLogRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:130:9633)
+2024-10-07 10:26:50 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `this.prisma.auditLog.create()` invocation in
+C:\Users\ajays\code\Execify\keys\dist\controllers\keys.controller.js:34:40
+
+  31         version,
+  32     },
+  33 });
+→ 34 yield this.prisma.auditLog.create(
+Null constraint violation on the fields: (`id`)
+    at Mn.handleRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7753)
+    at Mn.handleAndLogRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:130:9633)
+2024-10-07 10:27:52 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `this.prisma.auditLog.create()` invocation in
+C:\Users\ajays\code\Execify\keys\dist\controllers\keys.controller.js:34:40
+
+  31         version,
+  32     },
+  33 });
+→ 34 yield this.prisma.auditLog.create(
+Null constraint violation on the fields: (`id`)
+    at Mn.handleRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7753)
+    at Mn.handleAndLogRequestError (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\ajays\code\Execify\keys\node_modules\@prisma\client\runtime\library.js:130:9633)

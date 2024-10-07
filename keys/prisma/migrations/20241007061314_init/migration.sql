@@ -1,12 +1,9 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('ACTIVE', 'INACTIVE');
 
-  - The values [DEACTIVE] on the enum `Status` will be removed. If these variants are still used in the database, this will fail.
-  - The values [v1] on the enum `Version` will be removed. If these variants are still used in the database, this will fail.
-  - You are about to drop the column `authtoken` on the `ApiKey` table. All the data in the column will be lost.
-  - You are about to drop the column `desc` on the `ApiKey` table. All the data in the column will be lost.
+-- CreateEnum
+CREATE TYPE "Version" AS ENUM ('V1', 'V2');
 
-*/
 -- CreateEnum
 CREATE TYPE "BillingInterval" AS ENUM ('MONTHLY', 'YEARLY');
 
@@ -19,32 +16,23 @@ CREATE TYPE "SubscriptionStatus" AS ENUM ('ACTIVE', 'PAST_DUE', 'CANCELED', 'UNP
 -- CreateEnum
 CREATE TYPE "AuthProvider" AS ENUM ('GOOGLE', 'GITHUB');
 
--- AlterEnum
-BEGIN;
-CREATE TYPE "Status_new" AS ENUM ('ACTIVE', 'INACTIVE');
-ALTER TABLE "ApiKey" ALTER COLUMN "status" TYPE "Status_new" USING ("status"::text::"Status_new");
-ALTER TYPE "Status" RENAME TO "Status_old";
-ALTER TYPE "Status_new" RENAME TO "Status";
-DROP TYPE "Status_old";
-COMMIT;
+-- CreateTable
+CREATE TABLE "ApiKey" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "description" TEXT,
+    "key" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "version" "Version" NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'ACTIVE',
+    "rateLimit" INTEGER NOT NULL DEFAULT 100,
+    "permissions" JSONB,
+    "expiresAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
--- AlterEnum
-BEGIN;
-CREATE TYPE "Version_new" AS ENUM ('V1', 'V2');
-ALTER TABLE "ApiKey" ALTER COLUMN "version" TYPE "Version_new" USING ("version"::text::"Version_new");
-ALTER TYPE "Version" RENAME TO "Version_old";
-ALTER TYPE "Version_new" RENAME TO "Version";
-DROP TYPE "Version_old";
-COMMIT;
-
--- AlterTable
-ALTER TABLE "ApiKey" DROP COLUMN "authtoken",
-DROP COLUMN "desc",
-ADD COLUMN     "description" TEXT,
-ADD COLUMN     "expiresAt" TIMESTAMP(3),
-ADD COLUMN     "permissions" JSONB,
-ADD COLUMN     "rateLimit" INTEGER NOT NULL DEFAULT 100,
-ALTER COLUMN "status" SET DEFAULT 'ACTIVE';
+    CONSTRAINT "ApiKey_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "BillingInfo" (
@@ -128,6 +116,9 @@ CREATE TABLE "AuditLog" (
 
     CONSTRAINT "AuditLog_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ApiKey_key_key" ON "ApiKey"("key");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "BillingInfo_userId_key" ON "BillingInfo"("userId");

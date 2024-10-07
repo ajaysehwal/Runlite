@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request } from "express";
 import "dotenv/config";
 import cors from "cors";
 import morgan from "morgan";
@@ -26,6 +26,7 @@ export class Server {
   private initMiddleware() {
     this.app.use(helmet());
     this.app.use(cors());
+    this.app.set("trust proxy", true);
     this.app.use(express.json({ limit: "1mb" }));
     this.app.use(express.urlencoded({ extended: true, limit: "1mb" }));
     this.app.use(
@@ -37,6 +38,7 @@ export class Server {
     const limiter = rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 100, // limit each IP to 100 requests per windowMs
+      keyGenerator: (req: Request) => req.ip as string,
     });
     this.app.use(limiter);
     initMonitoring(this.app);
