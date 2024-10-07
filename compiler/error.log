@@ -51,3 +51,4 @@
 2024-09-27 12:00:35 [31merror[39m: Error during container execution: (HTTP code 409) container stopped/paused - container ef4d901e1ffa4d7c073143839e98d2f8b5f5a57f435ce7d59027fbce96dc1b10 is not running 
 2024-09-27 16:09:04 [31merror[39m: Failed job 70: job stalled more than allowable limit
 2024-09-27 18:13:13 [31merror[39m: read ECONNRESET
+2024-10-06 19:08:09 [31merror[39m: Uncaught Exception: bind EADDRINUSE null:8000

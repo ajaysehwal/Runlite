@@ -91,7 +91,7 @@ model User {
 }
 
 model AuditLog {
-  id        Int      @id @default(autoincrement()) 
+  id         String   @id @default(uuid()) 
   userId    String
   action    String
   details   Json?
