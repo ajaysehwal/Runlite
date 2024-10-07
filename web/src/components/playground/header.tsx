@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
     dispatch(setLoading(true));
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/v1",
+        `${process.env.NEXT_PUBLIC_COMPILER_SERVER}/v1`,
         {
           syntax: code,
           lang: language,
@@ -55,7 +55,7 @@ export const Header: React.FC = () => {
         {
           headers: {
             Authorization:
-              "Bearer ak_d169d700c1e350c68f5679ef61e39e003f6437984b72e4098b26d90046f1b638",
+              "Bearer ak_4c809760cf5b152f1514ae63cd24f1aa8d65f5e085c685231146cc67c21193d1",
           },
         }
       );

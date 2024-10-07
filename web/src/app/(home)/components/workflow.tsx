@@ -108,16 +108,17 @@ for i in range(5):
           </motion.div>
 
           <div className="relative">
-            {/* Animated Beam */}
             <motion.div
               className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full"
               style={{ opacity: beamOpacity }}
             >
-              <div className="h-full w-full bg-gradient-to-b from-transparent via-blue-300 to-transparent relative">
+              <div className="h-full w-full bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200 rounded-full shadow-lg">
                 <motion.div
-                  className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-16 bg-gradient-to-b from-blue-500 to-transparent"
+                  className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-lg"
                   style={{ top: beamProgress }}
-                />
+                >
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full animate-pulse" />
+                </motion.div>
               </div>
             </motion.div>
 
