@@ -27,7 +27,7 @@ export const Editor = () => {
   return (
     <>
       <MonacoEditor
-        height="84vh"
+        height="85vh"
         language={language}
         theme={theme}
         value={code}

@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
           <Header />
 
           <motion.div
-            className="flex-grow overflow-auto"
+            className="flex-grow overflow-auto h-[85vh]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
 
         <AnimatePresence initial={false}>
           <>
-            <ResizableHandle withHandle />
+            <ResizableHandle  />
             <ResizablePanel
               defaultSize={30}
               minSize={20}

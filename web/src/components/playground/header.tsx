@@ -54,8 +54,7 @@ export const Header: React.FC = () => {
         },
         {
           headers: {
-            Authorization:
-              "Bearer ak_4c809760cf5b152f1514ae63cd24f1aa8d65f5e085c685231146cc67c21193d1",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
           },
         }
       );
@@ -106,10 +105,10 @@ export const Header: React.FC = () => {
   );
 
   return (
-    <ScrollArea className="w-full">
+    <ScrollArea className="w-full h-[7vh] bg-gray-100">
       <div className="flex items-center gap-2 p-1 bg-gray-100">
         {isInitialLoading ? (
-          <div className="bg-gray-100 w-full flex gap-2 items-center p-1">
+          <div className="bg-gray-100 w-full flex gap-2 items-center">
             <SelectorSkeleton />
             <SelectorSkeleton />
             <ButtonSkeleton />
