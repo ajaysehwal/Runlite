@@ -1,6 +1,6 @@
 import Bull, { Queue, JobOptions, Job, JobCounts, JobStatusClean } from "bull";
-import { log } from "../../services/logging";
-import { config } from "../../config";
+import { log } from "../../services";
+import { config } from "../../configs";
 import { Payload, Result } from "../../types";
 
 export class QueueLayer {
@@ -28,16 +28,18 @@ export class QueueLayer {
   }
   startProcessing(
     processor: (job: Job<Payload>) => Promise<Result>,
-    concurrency: number = 1
+    concurrency: number = 1,
   ) {
     this.queue.process(concurrency, async (job) => {
       try {
+
         await job.progress(10);
         const result = await processor(job);
         await job.progress(100);
         return result;
       } catch (error) {
         this.handleError((error as Error).message, error);
+        return Promise.reject(error); 
       }
     });
   }
@@ -110,7 +112,7 @@ export class QueueLayer {
   async cleanQueue(
     grace: number = 1000,
     limit: number = 1000,
-    status?: JobStatusClean
+    status?: JobStatusClean,
   ): Promise<Job<Payload>[]> {
     try {
       const cleaned = await this.queue.clean(grace, status, limit);
@@ -121,7 +123,7 @@ export class QueueLayer {
       throw error;
     }
   }
-  private async cleanAllQueueData(): Promise<void> {
+  protected async cleanAllQueueData(): Promise<void> {
     try {
       log.info("Starting to clean all queue data...");
 

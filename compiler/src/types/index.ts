@@ -1,4 +1,5 @@
 import Docker from "dockerode";
+import { Response,Request } from "express";
 export interface Result {
   status: ExecutionStatus;
   stdout?: string;
@@ -63,5 +64,15 @@ export enum ExecutionStatus {
 }
 
 export enum versions {
-  "1.0.0",
+  "v1.0.0",
+}
+
+
+export interface ApiResponse extends Response{
+     isCached?:boolean
+     apiKeyId?:string
+}
+export interface ApiRequest extends Request {
+  userId?: string;
+  apikeyId?:string
 }

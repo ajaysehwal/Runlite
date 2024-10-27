@@ -23,7 +23,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Dashboard | Runlite",
   description:
-    "Execify provides a powerful code compilation API for developers. Execute code in 40+ programming languages",
+    "Runlite provides a powerful code compilation API for developers. Execute code in 40+ programming languages",
 };
 
 export default function RootLayout({

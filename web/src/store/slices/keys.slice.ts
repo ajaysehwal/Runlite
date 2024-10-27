@@ -3,6 +3,7 @@ import { getKeys, generateKey, deleteKey } from "../thunks/keys";
 import { ApiKey } from "@/types/schema";
 
 interface KeysState {
+  currentkey: string;
   keys: ApiKey[];
   isLoading: boolean;
   generateLoad: boolean;
@@ -11,6 +12,7 @@ interface KeysState {
 }
 
 const initialState: KeysState = {
+  currentkey: '',
   keys: [],
   isLoading: false,
   generateLoad: false,
@@ -30,6 +32,9 @@ const keysSlice = createSlice({
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
+    },
+    setCurrentkey: (state, action: PayloadAction<string>) => {
+      state.currentkey = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -79,5 +84,5 @@ const keysSlice = createSlice({
   },
 });
 
-export const { setKeys, clearKeys, setLoading } = keysSlice.actions;
+export const { setKeys, clearKeys, setLoading,setCurrentkey } = keysSlice.actions;
 export default keysSlice.reducer;

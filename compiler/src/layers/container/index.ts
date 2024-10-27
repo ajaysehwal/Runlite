@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { log } from "../../services/logging";
+import { log } from "../../services";
 import { v4 as uuidv4 } from "uuid";
 import { Extension, Payload } from "../../types";
 import Docker from "dockerode";
@@ -18,9 +18,8 @@ export class Containerizer {
   private readonly CODE_DIR: string = "/code";
   private readonly TEMP_DIR: string = os.tmpdir();
   constructor() {
-    const dockerHost =
-      process.env.DOCKER_HOST || "tcp://host.docker.internal:2375";
-
+    // const dockerHost = "/var/run/docker.sock";
+    const dockerHost = "tcp://localhost:2375";
     try {
       if (dockerHost.startsWith("tcp://")) {
         const url = new URL(dockerHost);
@@ -37,10 +36,17 @@ export class Containerizer {
       log.info(`Initialized Docker connection with: ${dockerHost}`);
     } catch (error) {
       log.error(
-        `Failed to initialize Docker connection: ${(error as Error).message}`
+        `Failed to initialize Docker connection: ${(error as Error).message}`,
       );
       throw error;
     }
+    this.docker.ping((err, data) => {
+      if (err) {
+        log.error("Failed to connect to Docker:", err);
+      } else {
+        log.info("Successfully connected to Docker:", data);
+      }
+    });
   }
   async start(payload: Payload) {
     const { lang, syntax } = payload;
@@ -60,7 +66,7 @@ export class Containerizer {
   }
   private async prepareFile(
     lang: Language,
-    syntax: string
+    syntax: string,
   ): Promise<{ file: string; output?: string }> {
     const fileId = uuidv4();
     const extension = Extension[lang];
@@ -80,17 +86,17 @@ export class Containerizer {
   private async createContainer(
     config: ContainerConfig,
     file: string,
-    output?: string
+    output?: string,
   ): Promise<Docker.Container> {
     const containerConfig = await this.createContainerConfig(
       config.image,
-      config.cmd(file, output)
+      config.cmd(file, output),
     );
     return this.docker.createContainer(containerConfig);
   }
   private async createContainerConfig(
     Image: string,
-    Cmd: string[]
+    Cmd: string[],
   ): Promise<Docker.ContainerCreateOptions> {
     return {
       Image,
@@ -113,7 +119,7 @@ export class Containerizer {
   private async writeCodeToContainer(
     container: Docker.Container,
     file: string,
-    syntax: string
+    syntax: string,
   ): Promise<void> {
     const tempPath = path.join(this.TEMP_DIR, file);
     try {
@@ -151,7 +157,7 @@ export class Containerizer {
   }
 
   private async cleanupContainer(
-    container: Docker.Container | null
+    container: Docker.Container | null,
   ): Promise<void> {
     if (container) {
       await container

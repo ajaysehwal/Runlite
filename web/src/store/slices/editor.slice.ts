@@ -4,7 +4,7 @@ interface InitEditorState {
   theme: Theme;
   language: Language;
   code: string;
-  response: Result;
+  response: Result | null;
   isLoading: boolean;
 }
 const initialState: InitEditorState = {
@@ -28,7 +28,7 @@ const editor = createSlice({
     setCode(state, action: PayloadAction<string>) {
       state.code = action.payload;
     },
-    setResponse(state, action: PayloadAction<Result>) {
+    setResponse(state, action: PayloadAction<Result | null>) {
       state.response = action.payload;
     },
     setLoading(state, action: PayloadAction<boolean>) {

@@ -9,8 +9,20 @@ export const DEFAULT_LANGUAGE = [
   "cpp",
   "php",
   "rust",
+  "go",
+  "ruby",
 ] as const;
-
+export const LanguageToCode: { [key: string]: number } = {
+  javascript: 1078,
+  java: 1058,
+  cpp: 1090,
+  python: 1080,
+  go: 1088,
+  typescript: 1070,
+  ruby: 1083,
+  php: 1030,
+  rust: 1020,
+} as const;
 export const API_VERSIONS = ["v1", "v2"] as const;
 
 export const STATUS_CONFIG: Record<Status, { color: string; tooltip: string }> =
@@ -35,6 +47,10 @@ export const STATUS_CONFIG: Record<Status, { color: string; tooltip: string }> =
     [Status.InternalError]: {
       color: "bg-red-500",
       tooltip: "An internal server error occurred",
+    },
+    [Status.Failed]: {
+      color: "bg-red-500",
+      tooltip: "Failed Exceution",
     },
   } as const;
 

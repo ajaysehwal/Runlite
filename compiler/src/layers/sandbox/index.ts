@@ -1,5 +1,5 @@
 import Docker from "dockerode";
-import { log } from "../../services/logging";
+import { log } from "../../services";
 import { Result, ExecutionStatus, ResourceUsage } from "../../types";
 
 export class Sandbox {
@@ -128,7 +128,7 @@ export class Sandbox {
       const payloadSize = header.readUInt32BE(4);
       const payload = buffer.slice(
         i + headerSize,
-        i + headerSize + payloadSize
+        i + headerSize + payloadSize,
       );
 
       if (type === 1 || type === 2) {

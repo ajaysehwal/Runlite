@@ -1,13 +1,26 @@
-export const LanguageCode: { [key: string]: number } = {
-  javascript: 78,
-  java: 58,
-  cpp: 90,
-  python: 80,
-  go: 88,
-  typescript: 70,
-  ruby: 83,
-  php: 30,
-  rust: 20,
+import { Language } from "../types";
+export const LanguageToCode: { [key: string]: number } = {
+  javascript: 1078,
+  java: 1058,
+  cpp: 1090,
+  python: 1080,
+  go: 1088,
+  typescript: 1070,
+  ruby: 1083,
+  php: 1030,
+  rust: 1020,
+} as const;
+
+export const CodeToLanguage: { [key: number]: Language } = {
+  1078: "javascript",
+  1058: "java",
+  1090: "cpp",
+  1080: "python",
+  1088: "go",
+  1070: "typescript",
+  1083: "ruby",
+  1030: "php",                                                                                                
+  1020: "rust",
 } as const;
 
 export const containerConfig = {

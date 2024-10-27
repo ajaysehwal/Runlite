@@ -1,10 +1,10 @@
 import { Redis } from "ioredis";
-import { config } from "../../config";
+import { config } from "../../configs";
 import crypto from "crypto";
-import { log } from "../../services/logging";
+import { log } from "../../services";
 import { Payload, Result } from "../../types";
 export class CacheLayer {
-  private redis: Redis;
+  public redis: Redis;
   private static readonly expiresIn = 60 * 60 * 2; // 2 hours
   constructor() {
     this.redis = new Redis({
@@ -33,10 +33,10 @@ export class CacheLayer {
   private async get(key: string): Promise<string | null> {
     return await this.redis.get(key);
   }
-  private async delete(key: string): Promise<void> {
+   async delete(key: string): Promise<void> {
     await this.redis.del(key);
   }
-  private async close(): Promise<void> {
+   async close(): Promise<void> {
     await this.redis.quit();
   }
   async isCached(payload: Payload) {

@@ -1,38 +1,39 @@
 import Bull from "bull";
-import { log } from "../services/logging";
+import { log } from "../services";
 import { CacheLayer } from "./cache";
 import { QueueLayer } from "./queue";
-import { Result, Payload, Language, ExecutionStatus } from "../types";
+import { Result, Payload, ExecutionStatus, ApiResponse } from "../types";
 import { Sandbox } from "./sandbox";
 import { Containerizer } from "./container";
-import { LanguageCode } from "../constants";
-
+import { LanguageToCode } from "../constants";
 export class Layers {
   private cacheLayer: CacheLayer;
   private queueLayer: QueueLayer;
   private containerizer: Containerizer;
   constructor() {
     this.cacheLayer = new CacheLayer();
-    this.queueLayer = new QueueLayer("compyl-jobs");
+    this.queueLayer = new QueueLayer("runlite");
     this.containerizer = new Containerizer();
     this.initializeJobQueue();
   }
   private initializeJobQueue(): void {
     this.queueLayer.startProcessing(this.processor.bind(this));
   }
-  async startProcess(payload: Payload) {
+  async startProcess(payload: Payload, res: ApiResponse) {
     try {
       const cachedResult = await this.cacheLayer.isCached(payload);
       if (cachedResult) {
+        res.isCached = true;
         return cachedResult;
       }
+      res.isCached = false;
       const job = await this.queueLayer.addTask(payload);
       if (!job?.id) {
         throw new Error("Job ID is undefined");
       }
       return this.waitForJobAndCache(job.id, payload);
     } catch (error) {
-      log.error("Error in starting process", (error as Error).message);
+      log.error(`Error in starting process ${(error as Error).message}`);
       throw error;
     }
   }
@@ -51,8 +52,9 @@ export class Layers {
       return result;
     } catch (error) {
       log.error(
-        "Error in waitForJobAndCache:",
-        error instanceof Error ? error.message : String(error)
+        `Error in waitForJobAndCache: ${
+          error instanceof Error ? error.message : String(error)
+        }`
       );
       throw error;
     }
@@ -65,12 +67,12 @@ export class Layers {
       }
       const sandbox = new Sandbox(container);
       const result = await sandbox.execute();
-      return { ...result, language: LanguageCode[job.data.lang] };
+      return { ...result, language: LanguageToCode[job.data.lang] };
     } catch (error) {
       return {
         status: ExecutionStatus.InternalError,
         error: (error as Error).message,
-        language: LanguageCode[job.data.lang],
+        language: LanguageToCode[job.data.lang],
       };
     }
   }

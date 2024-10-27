@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Braces, Copy, Check, Loader2, AlertCircle } from "lucide-react";
+import { Code, Braces, Copy, Check, Loader2 } from "lucide-react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 SyntaxHighlighter.registerLanguage("json", json);
 
@@ -115,13 +114,6 @@ const LoadingAnimation: React.FC = () => (
   </div>
 );
 
-const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
-  <Alert variant="destructive" className="mt-4">
-    <AlertCircle className="h-4 w-4" />
-    <AlertDescription>{message}</AlertDescription>
-  </Alert>
-);
-
 export const OutputBox: React.FC = () => {
   const { response, isLoading } = useEditor();
   const [initialLoad, setInitialLoad] = useState(true);
@@ -133,7 +125,11 @@ export const OutputBox: React.FC = () => {
 
   const tabContent = useMemo(
     () => ({
-      output: response.stdout || response.stderr || "No output available",
+      output: `${response?.stdout} \n ${response?.stderr}`.includes("undefined")
+        ? "No output available"
+        : `${response?.stdout} \n ${response?.stderr}` ||
+          response?.error ||
+          "No output available",
       details: JSON.stringify(response, null, 2),
     }),
     [response]
@@ -214,7 +210,7 @@ export const OutputBox: React.FC = () => {
                 {isLoading ? (
                   <LoadingAnimation />
                 ) : (
-                  <StatusBadge status={response.status} />
+                  <StatusBadge status={response?.status as Status} />
                 )}
               </motion.div>
             )}
@@ -222,18 +218,14 @@ export const OutputBox: React.FC = () => {
         </div>
 
         <div className="bg-white p-2 flex-grow overflow-hidden h-[85vh]">
-          {response.error ? (
-            <ErrorMessage message={response.error} />
-          ) : (
-            <>
-              <TabsContent value="output" className="h-full">
-                {renderContent(tabContent.output, "plaintext")}
-              </TabsContent>
-              <TabsContent value="details" className="h-full">
-                {renderContent(tabContent.details, "json")}
-              </TabsContent>
-            </>
-          )}
+          <>
+            <TabsContent value="output" className="h-full">
+              {renderContent(tabContent.output, "plaintext")}
+            </TabsContent>
+            <TabsContent value="details" className="h-full">
+              {renderContent(tabContent.details, "json")}
+            </TabsContent>
+          </>
         </div>
       </Tabs>
     </motion.div>
