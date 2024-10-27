@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import SignInButtons from "@/components/signInButton";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import GitHubStarButton from "@/components/githubStarButton";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -115,7 +116,8 @@ export default function Navbar() {
             </ul>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            <GitHubStarButton owner="ajaysehwal" repo="runlite" />
             {isAuthenticated ? (
               <Link href="/playground">
                 <Button variant="secondary">Dashboard</Button>
