@@ -12,7 +12,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import compression from "compression";
 import { routes } from "./managers/RouteManager";
 export class Server {
-  private app: Application;
+  public app: Application;
   private secuity: Security;
   private monitoring: Monitoring;
   private middle: AppMiddleware;
@@ -45,7 +45,7 @@ export class Server {
   private swaggerOptions = () => ({
     definition: {
       openapi: "3.0.0",
-      info: {
+      info: { 
         title: "Express API with Swagger",
         version: "1.0.0",
         description: "A sample Express API",

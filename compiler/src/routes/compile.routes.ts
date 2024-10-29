@@ -19,7 +19,7 @@ export class v1 extends BaseRoute {
   });
 
   constructor() {
-    super("/v1");
+    super("/v1/run");
     this.layers = new Layers();
   }
 
