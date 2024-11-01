@@ -10,7 +10,7 @@ const menuItems = [
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
   { name: "Docs", href: "https://dashboard.runlite.app/docs" },
-  { name: "Playground", href: "https://dashboard.runlite.app/docs" },
+  { name: "Playground", href: "https://dashboard.runlite.app/playground" },
 ];
 
 const NavbarItem = ({
