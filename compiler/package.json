@@ -26,7 +26,7 @@
     "prepare": "husky install",
     "security:audit": "npm audit && snyk test",
     "doc": "typedoc",
-    "build:docker": "docker build -t express-ts-template .",
+    "build:docker": "docker build -t runlite:compiler .",
     "clean": "rimraf dist coverage",
     "prestart": "build",
     "prisma:studio": "prisma studio",

@@ -69,30 +69,47 @@ const NavButton: React.FC<NavItem & { isActive: boolean }> = ({
   isActive,
 }) => (
   <Tooltip>
-    <TooltipTrigger asChild>
-      <Button
-        variant="ghost"
-        size="icon"
-        className={`rounded-lg ${isActive ? "bg-muted" : ""}`}
-        aria-label={label}
-        asChild
-      >
-        <Link href={href}>{icon}</Link>
-      </Button>
-    </TooltipTrigger>
-    <TooltipContent side="right" sideOffset={5}>
-      {label}
-    </TooltipContent>
-  </Tooltip>
+  <TooltipTrigger asChild>
+    <Button
+      variant="ghost"
+      size="icon"
+      className={`
+        rounded-lg transition-all duration-200 ease-in-out
+        ${isActive 
+          ? "bg-white/20 text-gray-700 shadow-lg backdrop-blur-sm" 
+          : "text-gray-600 hover:bg-white/10 hover:text-gray-500"
+        }
+      `}
+      aria-label={label}
+      asChild
+    >
+      <Link href={href}>{icon}</Link>
+    </Button>
+  </TooltipTrigger>
+  <TooltipContent 
+    side="right" 
+    sideOffset={5}
+    className="bg-white/90 backdrop-blur-sm"
+  >
+    {label}
+  </TooltipContent>
+</Tooltip>
+
 );
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-20 flex h-full flex-col border-r">
+    <aside className="fixed inset-y-0 left-0 z-20 flex h-full w-16 flex-col  bg-white">
       <div className="border-b p-2">
-        <Button variant="outline" size="icon" aria-label="Home" asChild>
+      <Button 
+          variant="ghost" 
+          size="icon" 
+          aria-label="Home" 
+          className="w-full bg-white/10 hover:bg-white/20 transition-colors"
+          asChild
+        >
           <Link href="/">
             <Logo />
           </Link>

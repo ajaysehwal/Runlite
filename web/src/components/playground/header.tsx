@@ -178,7 +178,7 @@ export const Header: React.FC = () => {
 
     try {
       const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_COMPILER_SERVER}/v1`,
+        `${process.env.NEXT_PUBLIC_COMPILER_SERVER}/v1/run`,
         {
           syntax: code,
           lang: LanguageToCode[language],
@@ -209,7 +209,7 @@ export const Header: React.FC = () => {
 
   return (
     <ScrollArea className="w-full h-[7vh] bg-gray-100">
-      <div className="flex items-center gap-2 p-1 bg-gray-100">
+      <div className="flex items-center gap-2 p-1 pl-5 bg-gray-100">
         <Suspense fallback={<SelectorSkeleton />}>
           <BasicSelector
             value={theme}
