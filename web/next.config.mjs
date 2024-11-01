@@ -17,6 +17,16 @@ const nextConfig = {
         NEXT_PUBLIC_API_KEY:
           "ak_bbc4b91f7737882dc41e5a25de3d07c4f1d5e81937171df7e402e700d6695908",
       },
+      async redirects() {
+        return [
+          {
+            source: '/',
+            destination: '/playground',
+            permanent: true, 
+          },
+        ];
+      },
+    
 };
 
 export default nextConfig;
