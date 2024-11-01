@@ -7,11 +7,10 @@ import { Logo } from "@/components/logo";
 import GitHubStarButton from "@/components/githubStar";
 
 const menuItems = [
-  { name: "Home", href: "/" },
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
-  { name: "Docs", href: "/docs" },
-  { name: "Playground", href: "/playground" },
+  { name: "Docs", href: "https://dashboard.runlite.app/docs" },
+  { name: "Playground", href: "https://dashboard.runlite.app/docs" },
 ];
 
 const NavbarItem = ({
