@@ -58,17 +58,6 @@ export class Config {
         username: this.config.REDIS_USERNAME,
         tls: this.config.REDIS_TLS_ENABLED,
       },
-      database: {
-        host: this.config.DB_HOST,
-        port: this.config.DB_PORT,
-        name: this.config.DB_NAME,
-        user: this.config.DB_USER,
-        password: this.config.DB_PASSWORD,
-        pool: {
-          min: this.config.DB_POOL_MIN,
-          max: this.config.DB_POOL_MAX,
-        },
-      },
       logging: {
         level: this.config.LOG_LEVEL,
         format: this.config.LOG_FORMAT,

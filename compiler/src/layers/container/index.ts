@@ -18,8 +18,8 @@ export class Containerizer {
   private readonly CODE_DIR: string = "/code";
   private readonly TEMP_DIR: string = os.tmpdir();
   constructor() {
-    // const dockerHost = "/var/run/docker.sock";
-    const dockerHost = "tcp://localhost:2375";
+    const dockerHost = "/var/run/docker.sock";
+    // const dockerHost = "tcp://localhost:2375";
     try {
       if (dockerHost.startsWith("tcp://")) {
         const url = new URL(dockerHost);
