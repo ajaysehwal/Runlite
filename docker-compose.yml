@@ -1,96 +1,107 @@
-version: "3.8"
 services:
-  # Main backend (code compilation server)
   compiler:
     build: ./compiler
-    container_name: compiler
-    ports:
-      - "8000:8000"
+     
+    # Remove direct port mapping since we're using multiple replicas
     volumes:
-      - //var/run/docker.sock:/var/run/docker.sock  # Windows path format
+      - /var/run/docker.sock:/var/run/docker.sock
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       - redis
       - postgres
+     
     environment:
       PORT: 8000
       NODE_ENV: development
-      CONSOLE_LOGS: "true"
+      CONSOLE_LOGS: true
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 100
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: admin
+      LOG_LEVEL: info
+      LOG_FORMAT: "json"
+      REDIS_TLS_ENABLED: false
+      CORS_ORIGIN: http://localhost:3000,http://localhost:8080
+      CORS_METHODS: GET,POST,PUT,DELETE,PATCH
       ENCRYPTION_KEY: e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
       REDIS_HOST: redis
-      DATABASE_URL: postgresql://compyl:compylpass@postgres:5432/defaultdb
+      DATABASE_URL: postgres://runlite:runlite@postgres:5432/defaultdb
       REDIS_PORT: 6379
       REDIS_USERNAME: default
       REDIS_PASSWORD: RadheRadhe
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
-      POSTGRES_USER: compyl
-      POSTGRES_PASSWORD: compylpass
+      POSTGRES_USER: runlite
+      POSTGRES_PASSWORD: runlite
       POSTGRES_DB: defaultdb
-      KAFKA_BROKER: kafka:9092
       DOCKER_HOST: tcp://host.docker.internal:2375
     networks:
-      - compyl-net
+      - runlite-net
+    deploy:
+      replicas: 3
 
-  # Keys Management Service
   keys-server:
-    build: ./keys # Assuming you have a keys management microservice in this directory
-    container_name: keys-server
-    ports:
-      - "8080:8080"
+    build: ./keys-management-server
     depends_on:
       - redis
       - postgres
     environment:
       PORT: 8080
       NODE_ENV: development
-      DATABASE_URL: postgresql://compyl:compylpass@postgres:5432/defaultdb
-      CONSOLE_LOGS: "true"
+      DATABASE_URL: postgresql://runlite:runlite@postgres:5432/defaultdb
+      CONSOLE_LOGS: true
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 100
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: admin
+      LOG_LEVEL: info
+      LOG_FORMAT: json
+      REDIS_TLS_ENABLED: false
+      CORS_ORIGIN: http://localhost:3000,http://localhost:8080
+      CORS_METHODS: GET,POST,PUT,DELETE,PATCH
       ENCRYPTION_KEY: e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3d
       REDIS_HOST: redis
+      COOKIE_SECRET: e8907ce6f646a336bd54a706c32d32a812558e138e9ed44cdc26868db7373c3e
       REDIS_PORT: 6379
       REDIS_USERNAME: default
       REDIS_PASSWORD: RadheRadhe
     networks:
-      - compyl-net
+      - runlite-net
+    deploy:
+      replicas: 2
 
-  # Redis service
   redis:
     image: redis:latest
-    container_name: redis
     ports:
       - "6379:6379"
     command: ["redis-server", "--requirepass", "RadheRadhe"]
     networks:
-      - compyl-net
+      - runlite-net
 
-  # Postgres service
   postgres:
     image: postgres:latest
-    container_name: postgres
     environment:
-      POSTGRES_USER: compyl
-      POSTGRES_PASSWORD: compylpass
+      POSTGRES_USER: runlite
+      POSTGRES_PASSWORD: runlite
       POSTGRES_DB: defaultdb
     ports:
       - "5432:5432"
     networks:
-      - compyl-net
+      - runlite-net
 
   nginx:
     image: nginx:latest
-    container_name: nginx-reverse-proxy
     ports:
-      - "80:80"  # Expose HTTP on port 80
+      - "80:80"  # Only expose nginx ports
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Mount your nginx.conf file
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - compiler
       - keys-server
     networks:
-      - compyl-net
+      - runlite-net
 
 networks:
-  compyl-net:
+  runlite-net:
     driver: bridge
