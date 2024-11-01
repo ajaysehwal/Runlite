@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
           defaultSize={70}
           minSize={40}
           maxSize={70}
-          className="flex flex-col relative"
+          className="flex flex-col relative border-none"
         >
           <Header />
 
@@ -33,12 +33,12 @@ const Dashboard: React.FC = () => {
 
         <AnimatePresence initial={false}>
           <>
-            <ResizableHandle  />
+            <ResizableHandle className="border-none" />
             <ResizablePanel
               defaultSize={30}
               minSize={20}
               maxSize={60}
-              className="relative"
+              className="relative border-none"
             >
               <motion.div
                 initial={{ width: 0 }}

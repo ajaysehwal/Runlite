@@ -182,7 +182,7 @@ export const OutputBox: React.FC = () => {
     >
       <Tabs defaultValue="output" className="w-full flex flex-col">
         <div className="flex justify-between items-center bg-gray-100 p-1 h-[7vh] border-b border-gray-300">
-          <TabsList className="bg-white border border-gray-300 ">
+          <TabsList className="bg-white border border-gray-300">
             <TabsTrigger
               value="output"
               className="flex items-center data-[state=active]:bg-gray-100 data-[state=active]:text-gray-800 py-2 transition-colors duration-200"
