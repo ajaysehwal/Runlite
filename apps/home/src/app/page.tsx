@@ -1,15 +1,15 @@
-"use client";
+"use client"
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Code, Zap, Shield, Globe, Server, Users } from "lucide-react";
-import Navbar from "./components/navbar";
-import Pricing from "./components/pricing";
-import Hero from "./components/hero";
+import Navbar from "@/components/navbar";
+import Pricing from "@/components/pricing";
+import Hero from "@/components/hero";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import WorkflowAnimation from "./components/workflow";
+import WorkflowAnimation from "@/components/workflow";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
       </main>
 
       <footer className="container mx-auto py-8 text-center text-gray-600">
-        <p>&copy; 2024 Compyl. All rights reserved.</p>
+        <p>&copy; 2024 Runlite. All rights reserved.</p>
       </footer>
     </ScrollArea>
   );

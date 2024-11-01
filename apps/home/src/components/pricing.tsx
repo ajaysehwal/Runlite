@@ -1,9 +1,11 @@
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface PricingFeature {
   text: string;
@@ -25,6 +27,7 @@ const fadeInUp = {
 };
 
 export default function Pricing() {
+  const router=useRouter()
   const pricingPlans: PricingPlan[] = [
     {
       title: "Basic",
@@ -32,7 +35,7 @@ export default function Pricing() {
       price: "$0",
       features: [
         { text: "1,000 API calls per month" },
-        { text: "10 concurrent requests" },
+        { text: "100 request per day" },
         { text: "Community support" },
         { text: "Basic analytics dashboard" },
         { text: "99.9% uptime SLA" },
@@ -146,7 +149,9 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <div className="p-6 mt-auto">
+                  {plan.title==="Basic"}
                   <Button
+                  onClick={plan.title === "Basic" ? () => router.push('/playground') : () => {}}
                     className={`w-full h-11 text-sm font-medium ${
                       index === 0
                         ? "bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50"

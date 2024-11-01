@@ -49,7 +49,7 @@ export default function Hero() {
 
       <motion.div
         variants={fadeInUp}
-        className="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+        className="mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 z-20"
       >
         <Button
           size="lg"

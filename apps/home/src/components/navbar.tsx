@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import SignInButtons from "@/components/signInButton";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import GitHubStarButton from "@/components/githubStarButton";
+import GitHubStarButton from "@/components/githubStar";
 
 const menuItems = [
-  { name: "Home", href: "/" },
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
-  { name: "Docs", href: "/docs" },
-  { name: "Playground", href: "/playground" },
+  { name: "Docs", href: "https://dashboard.runlite.app/docs" },
+  { name: "Playground", href: "https://dashboard.runlite.app/docs" },
 ];
 
 const NavbarItem = ({
@@ -48,7 +45,6 @@ const NavbarItem = ({
 );
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
@@ -118,13 +114,6 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
             <GitHubStarButton owner="ajaysehwal" repo="runlite" />
-            {isAuthenticated ? (
-              <Link href="/playground">
-                <Button variant="secondary">Dashboard</Button>
-              </Link>
-            ) : (
-              <SignInButtons />
-            )}
           </div>
 
           <div className="md:hidden">
@@ -160,17 +149,6 @@ export default function Navbar() {
               {item.name}
             </a>
           ))}
-          <div className="pt-4 pb-3 border-t border-gray-200">
-            <div className="px-2">
-              {isAuthenticated ? (
-                <Link href="/playground">
-                  <Button className="w-full">Dashboard</Button>
-                </Link>
-              ) : (
-                <SignInButtons />
-              )}
-            </div>
-          </div>
         </div>
       </motion.div>
     </motion.nav>
