@@ -1,5 +1,5 @@
 {
-  "name": "express-ts-template",
+  "name": "keys",
   "version": "1.0.0",
   "description": "Secure and robust Express server application",
   "main": "dist/index.js",

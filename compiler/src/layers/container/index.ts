@@ -17,6 +17,7 @@ export class Containerizer {
   private readonly docker: Docker;
   private readonly CODE_DIR: string = "/code";
   private readonly TEMP_DIR: string = os.tmpdir();
+  private readonly MEMORY:number=512 * 1024 * 1024
   constructor() {
     const dockerHost = "/var/run/docker.sock";
     // const dockerHost = "tcp://localhost:2375";
@@ -102,7 +103,7 @@ export class Containerizer {
       Image,
       Cmd,
       HostConfig: {
-        Memory: 256 * 1024 * 1024,
+        Memory: this.MEMORY,
         CpuQuota: 100000,
         NetworkMode: "bridge",
       },
