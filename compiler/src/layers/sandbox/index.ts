@@ -123,9 +123,12 @@ export class Sandbox {
     let result = "";
 
     for (let i = 0; i < buffer.length; ) {
+      if (i + headerSize > buffer.length) break;
       const header = buffer.slice(i, i + headerSize);
       const type = header[0];
       const payloadSize = header.readUInt32BE(4);
+      if (i + headerSize + payloadSize > buffer.length) break;
+
       const payload = buffer.slice(
         i + headerSize,
         i + headerSize + payloadSize,

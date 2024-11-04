@@ -1,0 +1,8 @@
+CREATE USER runlite WITH PASSWORD 'runlite';
+ALTER USER runlite WITH SUPERUSER;
+CREATE DATABASE defaultdb;
+GRANT ALL PRIVILEGES ON DATABASE defaultdb TO runlite;
+ALTER DATABASE defaultdb OWNER TO runlite;
+\c defaultdb
+CREATE SCHEMA IF NOT EXISTS public;
+GRANT ALL ON SCHEMA public TO runlite;
