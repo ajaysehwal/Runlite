@@ -9,8 +9,8 @@ import GitHubStarButton from "@/components/githubStar";
 const menuItems = [
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
-  { name: "Docs", href: "https://dashboard.runlite.app/docs" },
-  { name: "Playground", href: "https://dashboard.runlite.app/playground" },
+  { name: "Docs", href: "https://console.runlite.app/docs" },
+  { name: "Playground", href: "https://console.runlite.app/playground" },
 ];
 
 const NavbarItem = ({
