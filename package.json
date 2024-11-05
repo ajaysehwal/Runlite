@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "private":true,
+  "private": true,
   "workspaces": ["apps/*", "compiler", "keys-management-server"],
   "packageManager": "yarn@1.22.22",
   "scripts": {
