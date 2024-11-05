@@ -76,7 +76,7 @@ const NavButton: React.FC<NavItem & { isActive: boolean }> = ({
       className={`
         rounded-lg transition-all duration-200 ease-in-out
         ${isActive 
-          ? "bg-white/20 text-gray-700 shadow-lg backdrop-blur-sm" 
+          ? "bg-[rgb(63,132,246)] text-white shadow-lg backdrop-blur-sm hover:bg-blue-400 hover:text-gray-100" 
           : "text-gray-600 hover:bg-white/10 hover:text-gray-500"
         }
       `}
