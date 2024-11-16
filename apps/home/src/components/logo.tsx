@@ -49,7 +49,7 @@ export const Logo: FC<LogoProps> = ({
           cx="50"
           cy="50"
           r="45"
-          className="fill-gray-50 filter drop-shadow-md"
+          className="fill-gray-50 filter"
         />
         <path
           d="M60 25 L35 50 L48 50 L40 75 L65 50 L52 50 Z"

@@ -66,7 +66,7 @@ const WorkflowAnimation = () => {
   );
 
   return (
-    <div ref={containerRef} className="min-h-screen py-16 bg-slate-50">
+    <div ref={containerRef} className="min-h-screen py-16 w-full">
       <div className="max-w-5xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

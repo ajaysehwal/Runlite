@@ -76,7 +76,7 @@ export default function Pricing() {
 
   return (
     <motion.section
-      className="py-24 bg-gradient-to-b from-slate-50 to-slate-100"
+      className="py-24 bg-gradient-to-b from-slate-50 to-slate-100 w-full"
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.2 } } }}

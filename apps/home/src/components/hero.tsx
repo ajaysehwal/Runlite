@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code2, Zap } from "lucide-react";
 import RetroGrid from "@/components/ui/retro-grid";
+import { useRouter } from "next/navigation";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -15,6 +16,7 @@ const scaleIn = {
 };
 
 export default function Hero() {
+  const router=useRouter()
   return (
     <motion.section
       className="relative flex h-[700px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-background to-background/80 mb-32"
@@ -26,7 +28,7 @@ export default function Hero() {
         <RetroGrid />
       </motion.div>
 
-      <motion.div className="z-10 text-center" variants={fadeInUp}>
+      <motion.div className="z-10 text-center max-w-7xl" variants={fadeInUp}>
         <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800 mb-6">
           Launch Your Projects Faster
         </span>
@@ -43,7 +45,7 @@ export default function Hero() {
         variants={fadeInUp}
       >
         Harness our powerful APIs for seamless code execution across multiple
-        languages. Accelerate your development with 10,000 free API calls to
+        languages. Accelerate your development with 1000 free API calls to
         kickstart your journey.
       </motion.p>
 
@@ -53,12 +55,15 @@ export default function Hero() {
       >
         <Button
           size="lg"
+          onClick={()=>router.push('https://console.runlite.app/api-keys')}
           className="group bg-blue-600 text-lg text-white transition-all hover:bg-blue-700"
         >
           Get Your API Key
           <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
         </Button>
         <Button
+          onClick={()=>router.push('https://console.runlite.app/docs')}
+
           size="lg"
           variant="outline"
           className="text-lg text-blue-600 transition-all hover:bg-blue-50"
