@@ -1,6 +1,11 @@
 {
-  "name": "root",
-  "workspaces": ["apps/*", "compiler", "keys-management-server"],
+  "name": "runlite",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "compiler",
+    "keys-management-server"
+  ],
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "turbo run dev",
@@ -9,6 +14,7 @@
     "start": "turbo run start"
   },
   "devDependencies": {
+    "prettier": "^3.3.3",
     "turbo": "^2.2.3"
   }
 }
