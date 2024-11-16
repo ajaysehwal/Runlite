@@ -1,6 +1,6 @@
-# Compyl - Fastest and Secure Code Compilation Server
+# Runlite - Fastest and Secure Code Compilation Server
 
-Compyl is a high-performance and secure server for compiling code across various programming languages. Built with Docker containers, Compyl provides a sandboxed environment, ensuring safe execution while delivering fast and reliable code compilation and execution.
+Runlite is a high-performance and secure server for compiling code across various programming languages. Built with Docker containers, Runlite provides a sandboxed environment, ensuring safe execution while delivering fast and reliable code compilation and execution.
 
 ## Features
 
