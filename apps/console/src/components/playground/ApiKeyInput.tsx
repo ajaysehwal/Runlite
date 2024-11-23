@@ -91,7 +91,7 @@ export default function ApiInput() {
             onChange={handleApiKeyChange}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="Paste your API key"
+            placeholder="Paste your API key for testing"
             type={showKey ? "text" : "text"}
             className={`
             pr-20
