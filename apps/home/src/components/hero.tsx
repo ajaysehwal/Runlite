@@ -28,17 +28,18 @@ export default function Hero() {
         <RetroGrid />
       </motion.div>
 
-      <motion.div className="z-10 text-center max-w-7xl" variants={fadeInUp}>
-        <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800 mb-6">
-          Launch Your Projects Faster
-        </span>
-        <h1 className="text-5xl font-extrabold leading-tight tracking-tighter text-foreground md:text-6xl lg:text-7xl">
-          Unleash Your Code,{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Amplify Your Build
-          </span>
-        </h1>
-      </motion.div>
+      <motion.div className="z-10 text-center max-w-7xl mx-auto px-4" variants={fadeInUp}>
+  <span className="inline-block rounded-full bg-blue-100/90 px-4 py-1.5 text-sm font-semibold text-blue-800 mb-8">
+  Trusted by Developers Worldwide ⚡️
+  </span>
+  
+  <h1 className="text-5xl font-extrabold leading-tight tracking-tighter text-foreground md:text-6xl lg:text-7xl">
+   Cloud Code Execution{" "}
+    <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 bg-clip-text text-transparent">
+    Made Simple
+    </span>
+  </h1>
+</motion.div>
 
       <motion.p
         className="mt-6 max-w-2xl text-center text-xl text-muted-foreground"
