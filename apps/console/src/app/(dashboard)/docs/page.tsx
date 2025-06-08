@@ -113,7 +113,7 @@ const Documentation: React.FC = () => {
       animate={{ x: 0 }}
       exit={{ x: -300 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed z-40 h-screen bg-background border-r"
+      className="fixed z-40 h-screen border-r border-gray-200 dark:border-gray-800"
       style={{ width: SIDEBAR_WIDTH }}
     >
       <ScrollArea className="h-full pb-8">
@@ -122,7 +122,7 @@ const Documentation: React.FC = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="lg:hidden text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               onClick={() => setIsMenuOpen(false)}
             >
               <X className="h-5 w-5" />
@@ -130,13 +130,13 @@ const Documentation: React.FC = () => {
           </div>
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 h-4 w-4" />
             <Input
               type="text"
               placeholder="Search documentation..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 bg-secondary/50"
+              className="pl-9 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400"
             />
           </div>
 
@@ -145,18 +145,18 @@ const Documentation: React.FC = () => {
               <div key={section.id} className="space-y-1">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start text-left group transition-colors ${
+                  className={`w-full justify-start text-left group transition-colors rounded-lg ${
                     activeSection === section.id
-                      ? "bg-secondary text-primary"
-                      : "hover:bg-secondary/50"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                      : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                   }`}
                   onClick={() => handleSectionChange(section.id)}
                 >
                   <section.icon
                     className={`mr-2 h-4 w-4 transition-colors ${
                       activeSection === section.id
-                        ? "text-primary"
-                        : "text-muted-foreground group-hover:text-primary"
+                        ? "text-blue-600 dark:text-blue-400"
+                        : "text-gray-400 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"
                     }`}
                   />
                   <span className="truncate">{section.title}</span>
@@ -174,11 +174,11 @@ const Documentation: React.FC = () => {
 
     return (
       <div
-        className="hidden xl:block fixed right-0 h-screen border-l bg-background"
+        className="hidden xl:block fixed right-0 h-screen  border-l border-gray-200 dark:border-gray-800"
         style={{ width: TOC_WIDTH }}
       >
         <div className="p-6">
-          <h3 className="font-medium mb-4 text-sm text-gray-700 uppercase">
+          <h3 className="font-medium mb-4 text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">
             On this page
           </h3>
           <div className="space-y-1">
@@ -187,10 +187,10 @@ const Documentation: React.FC = () => {
                 key={subheading.id}
                 variant="ghost"
                 size="sm"
-                className={`w-full justify-start text-left transition-colors ${
+                className={`w-full justify-start text-left transition-colors rounded-lg ${
                   activeHeading === subheading.id
-                    ? "text-primary bg-secondary"
-                    : "text-muted-foreground hover:text-primary hover:bg-secondary/50"
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
                 }`}
                 onClick={() =>
                   handleSubheadingClick(currentSection.id, subheading.id)
@@ -206,14 +206,14 @@ const Documentation: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen">
       <Button
         variant="outline"
         size="icon"
-        className="lg:hidden fixed top-4 left-4 z-50 bg-background shadow-md"
+        className="lg:hidden fixed top-4 left-4 z-50 border border-gray-200 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700"
         onClick={() => setIsMenuOpen(true)}
       >
-        <Menu className="h-5 w-5" />
+        <Menu className="h-5 w-5 text-gray-700 dark:text-gray-300" />
       </Button>
 
       {isMenuOpen && (
@@ -221,7 +221,7 @@ const Documentation: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-gray-900/20 dark:bg-gray-900/50 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => setIsMenuOpen(false)}
         />
       )}
@@ -244,18 +244,12 @@ const Documentation: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="prose prose-gray dark:prose-invert max-w-none"
+              className="prose prose-gray dark:prose-invert max-w-none prose-headings:scroll-mt-28 prose-headings:font-semibold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-img:rounded-lg prose-img:shadow-md"
             >
               {sections.map(
                 (section) =>
                   section.id === activeSection && (
-                    <div key={section.id}>
-                      <h1 className="flex items-center gap-3 mb-8 text-4xl font-bold tracking-tight">
-                        <section.icon className="h-10 w-10" />
-                        {section.title}
-                      </h1>
-                      {section.content}
-                    </div>
+                    <div key={section.id}>{section.content}</div>
                   )
               )}
             </motion.div>

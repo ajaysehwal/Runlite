@@ -11,7 +11,7 @@ import {
 import { DEFAULT_THEME, DEFAULT_LANGUAGE, LanguageToCode } from "@/constants";
 import { Language, Status, Theme } from "@/types";
 import axios, { AxiosError } from "axios";
-import { Check, ChevronsUpDown, Loader, Play } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, Play, Code2, Sun } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -25,7 +25,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -53,13 +52,9 @@ interface LanguageOption {
   value: string;
 }
 
-const SelectorSkeleton: React.FC = () => (
-  <Skeleton className="w-[140px] bg-gray-200 h-10 animate-pulse" />
-);
+const SelectorSkeleton: React.FC = () => <Skeleton className="w-[120px] h-9" />;
 
-const ButtonSkeleton: React.FC = () => (
-  <Skeleton className="w-24 bg-gray-200 h-10 animate-pulse" />
-);
+const ButtonSkeleton: React.FC = () => <Skeleton className="w-[100px] h-9" />;
 
 const BasicSelector: React.FC<SelectorProps> = ({
   value,
@@ -68,18 +63,28 @@ const BasicSelector: React.FC<SelectorProps> = ({
   label,
 }) => (
   <Select onValueChange={onChange} value={value}>
-    <SelectTrigger className="w-[140px] bg-white">
+    <SelectTrigger
+      className={cn(
+        "h-9",
+        "bg-transparent",
+        "border border-slate-200 dark:border-slate-700",
+        "hover:bg-slate-100/50 dark:hover:bg-slate-800/50",
+        "transition-colors duration-150"
+      )}
+    >
+      <Sun className="w-4 h-4 mr-2 text-slate-500 dark:text-slate-400" />
       <SelectValue placeholder={`Select ${label}`} />
     </SelectTrigger>
-    <SelectContent>
+    <SelectContent className="outline-none">
       {options.map((option) => (
-        <SelectItem key={option} value={option}>
+        <SelectItem key={option} value={option} className="cursor-pointer">
           {option.charAt(0).toUpperCase() + option.slice(1)}
         </SelectItem>
       ))}
     </SelectContent>
   </Select>
 );
+
 const LanguageSelector: React.FC<SelectorProps> = ({
   value,
   onChange,
@@ -88,7 +93,6 @@ const LanguageSelector: React.FC<SelectorProps> = ({
 }) => {
   const [open, setOpen] = React.useState(false);
 
-  // Convert options to LanguageOption format
   const languageOptions: LanguageOption[] = options.map((option) => ({
     label: option.charAt(0).toUpperCase() + option.slice(1),
     value: option,
@@ -101,17 +105,28 @@ const LanguageSelector: React.FC<SelectorProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between bg-white"
+          className={cn(
+            "h-9 justify-between",
+            "bg-transparent",
+            "border border-slate-200 dark:border-slate-700",
+            "hover:bg-slate-100/50 dark:hover:bg-slate-800/50",
+            "transition-colors duration-150"
+          )}
         >
-          {value
-            ? languageOptions.find((lang) => lang.value === value)?.label
-            : `Select ${label}...`}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <div className="flex items-center gap-2">
+            <Code2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+            <span className="truncate">
+              {value
+                ? languageOptions.find((lang) => lang.value === value)?.label
+                : `Select ${label}...`}
+            </span>
+          </div>
+          <ChevronsUpDown className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="p-0 bg-white dark:bg-slate-900">
         <Command>
-          <CommandInput placeholder={`Search ${label}...`} />
+          <CommandInput placeholder={`Search ${label}...`} className="h-9" />
           <CommandList>
             <CommandEmpty>No {label} found.</CommandEmpty>
             <CommandGroup>
@@ -123,6 +138,7 @@ const LanguageSelector: React.FC<SelectorProps> = ({
                     onChange(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
+                  className="cursor-pointer"
                 >
                   <Check
                     className={cn(
@@ -140,6 +156,7 @@ const LanguageSelector: React.FC<SelectorProps> = ({
     </Popover>
   );
 };
+
 const RunButton: React.FC<{ onClick: () => void; isLoading: boolean }> = ({
   onClick,
   isLoading,
@@ -149,13 +166,22 @@ const RunButton: React.FC<{ onClick: () => void; isLoading: boolean }> = ({
     size="sm"
     disabled={isLoading}
     onClick={onClick}
-    className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 flex items-center gap-2 whitespace-nowrap"
+    className={cn(
+      "bg-green-500 hover:bg-green-600 text-white",
+      "h-9 px-6",
+      "transition-colors duration-150",
+      "disabled:opacity-50 disabled:cursor-not-allowed",
+      "font-medium"
+    )}
   >
     {isLoading ? (
-      <Loader className="size-4 animate-spin" />
+      <>
+        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+        Running
+      </>
     ) : (
       <>
-        <Play className="size-4" />
+        <Play className="w-4 h-4 mr-2" />
         Run
       </>
     )}
@@ -208,31 +234,33 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <ScrollArea className="w-full h-[7vh] bg-gray-100">
-      <div className="flex items-center gap-2 p-1 pl-5 bg-gray-100">
-        <Suspense fallback={<SelectorSkeleton />}>
-          <BasicSelector
-            value={theme}
-            onChange={handleThemeChange}
-            options={DEFAULT_THEME}
-            label="theme"
-          />
-        </Suspense>
-        <Suspense fallback={<SelectorSkeleton />}>
-          <LanguageSelector
-            value={language}
-            onChange={handleLanguageChange}
-            options={DEFAULT_LANGUAGE}
-            label="language"
-          />
-        </Suspense>
-        <Suspense fallback={<ButtonSkeleton />}>
-          <RunButton onClick={runCode} isLoading={isLoading} />
-        </Suspense>
+    <div className="w-full border-b border-slate-200 dark:border-slate-800">
+      <div className="flex items-center h-14 px-4">
+        <div className="flex items-center space-x-2">
+          <Suspense fallback={<SelectorSkeleton />}>
+            <BasicSelector
+              value={theme}
+              onChange={handleThemeChange}
+              options={DEFAULT_THEME}
+              label="theme"
+            />
+          </Suspense>
+          <Suspense fallback={<SelectorSkeleton />}>
+            <LanguageSelector
+              value={language}
+              onChange={handleLanguageChange}
+              options={DEFAULT_LANGUAGE}
+              label="language"
+            />
+          </Suspense>
+          <Suspense fallback={<ButtonSkeleton />}>
+            <RunButton onClick={runCode} isLoading={isLoading} />
+          </Suspense>
+        </div>
+        <div className="flex-1" />
         <ApiInput />
       </div>
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+    </div>
   );
 };
 

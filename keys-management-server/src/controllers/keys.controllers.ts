@@ -8,7 +8,7 @@ export class KeysController {
   }
   async generate(
     data: { name: string; desc: string; version: Version },
-    userId: string,
+    userId: string
   ) {
     const { name, desc, version } = data;
     const apiKey = this.crypto.generateApiKey();

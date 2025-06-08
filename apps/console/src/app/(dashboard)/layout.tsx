@@ -7,6 +7,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { ReduxProvider } from "@/providers/RxProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "next-themes";
 
 // Font configurations
 const geistSans = localFont({
@@ -25,7 +26,8 @@ const geistMono = localFont({
 
 const siteConfig = {
   name: "Runlite",
-  description: "Execute code in 40+ programming languages with Runlite's powerful code compilation API",
+  description:
+    "Execute code in 40+ programming languages with Runlite's powerful code compilation API",
   url: "http://localhost:3000",
 };
 
@@ -58,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    creator: "@runlite", 
+    creator: "@runlite",
   },
   robots: {
     index: true,
@@ -82,7 +84,10 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -91,17 +96,21 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background`}
       >
-        <ReduxProvider>
-          <AuthProvider>
-            <TooltipProvider>
-              <div className="relative flex min-h-screen">
-                <Sidebar />
-                <div className="flex-1 flex flex-col pl-[56px]">
-                  <Header />
-                  <main className="flex-1">
-                    {children}
-                  </main>
-                  {/* <footer className="py-6 md:px-8 md:py-0">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReduxProvider>
+            <AuthProvider>
+              <TooltipProvider>
+                <div className="relative flex min-h-screen">
+                  <Sidebar />
+                  <div className="flex-1 flex flex-col pl-[56px]">
+                    <Header />
+                    <main className="flex-1">{children}</main>
+                    {/* <footer className="py-6 md:px-8 md:py-0">
                     <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
                       <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
                         Built by{" "}
@@ -126,12 +135,13 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
                       </p>
                     </div>
                   </footer> */}
+                  </div>
+                  <Toaster />
                 </div>
-                <Toaster />
-              </div>
-            </TooltipProvider>
-          </AuthProvider>
-        </ReduxProvider>
+              </TooltipProvider>
+            </AuthProvider>
+          </ReduxProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

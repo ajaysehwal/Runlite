@@ -1,7 +1,11 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": ["apps/*", "compiler", "keys-management-server"],
+  "workspaces": [
+    "apps/*",
+    "compiler",
+    "keys-management-server"
+  ],
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "turbo run dev",
@@ -11,5 +15,8 @@
   },
   "devDependencies": {
     "turbo": "^2.2.3"
+  },
+  "dependencies": {
+    "framer-motion": "^12.16.0"
   }
 }

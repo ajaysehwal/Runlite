@@ -52,12 +52,12 @@ export const NewApiKeyDialog: React.FC<NewApiKeyDialogProps> = ({
     <AnimatePresence>
       {open && (
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="sm:max-w-[425px] bg-white rounded-lg shadow-lg">
+          <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 rounded-lg shadow-lg">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-gray-800">
+              <DialogTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                 New API Key Created
               </DialogTitle>
-              <DialogDescription className="text-gray-600">
+              <DialogDescription className="text-gray-600 dark:text-gray-400">
                 Please copy your new API key. It will only be shown once.
               </DialogDescription>
             </DialogHeader>
@@ -69,21 +69,21 @@ export const NewApiKeyDialog: React.FC<NewApiKeyDialogProps> = ({
               transition={{ duration: 0.3 }}
             >
               <div className="relative">
-                <code className="bg-gray-100 p-4 rounded-lg block mb-4 text-sm font-mono break-all">
+                <code className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 rounded-lg block mb-4 text-sm font-mono break-all">
                   {apiKey}
                 </code>
                 <motion.div
-                  className="absolute inset-0 bg-green-500 bg-opacity-20 flex items-center justify-center rounded-lg"
+                  className="absolute inset-0 bg-green-500 dark:bg-green-400 bg-opacity-20 dark:bg-opacity-20 flex items-center justify-center rounded-lg"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: copiedKey ? 1 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <CheckCircle className="text-green-500 h-8 w-8" />
+                  <CheckCircle className="text-green-500 dark:text-green-400 h-8 w-8" />
                 </motion.div>
               </div>
               <Button
                 onClick={handleCopyKey}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-300"
+                className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white transition-colors duration-300"
               >
                 <Copy className="mr-2 h-4 w-4" />
                 {copiedKey ? "Copied!" : "Copy API Key"}
@@ -92,7 +92,7 @@ export const NewApiKeyDialog: React.FC<NewApiKeyDialogProps> = ({
             <DialogFooter>
               <Button
                 onClick={() => setOpen(false)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 transition-colors duration-300"
+                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 transition-colors duration-300"
               >
                 Close
               </Button>
