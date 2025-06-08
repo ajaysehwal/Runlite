@@ -20,13 +20,12 @@ const Home: React.FC = () => {
   return (
     <ScrollArea className="min-h-screen bg-white text-gray-900">
       <Navbar />
-      <main className="mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <main>
         <Hero />
         <WorkflowAnimation />
         <FeaturesSection />
         <Pricing />
         <motion.section
-          className="mt-32 mb-16"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -45,33 +44,37 @@ const Home: React.FC = () => {
                 ease: "easeInOut",
               }}
             />
-            <CardContent className="relative z-10 py-12">
-              <h3 className="text-4xl font-bold mb-6 text-center">
-                Ready to get started?
-              </h3>
-              <p className="text-center mb-8 text-lg">
-                Sign up now and get 10,000 free API calls.
-              </p>
-              <form className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-white/20 text-white placeholder-white/70 border-white/30 focus:border-white"
-                />
-                <Button
-                  type="submit"
-                  className="bg-white text-blue-600 hover:bg-blue-100 transition-colors duration-300"
-                >
-                  Start Coding Now
-                </Button>
-              </form>
+            <CardContent className="relative z-10 py-16">
+              <div className="max-w-3xl mx-auto px-4">
+                <h3 className="text-4xl sm:text-5xl font-bold mb-6 text-center">
+                  Ready to get started?
+                </h3>
+                <p className="text-center mb-8 text-lg opacity-90">
+                  Sign up now and get 10,000 free API calls.
+                </p>
+                <form className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="bg-white/20 text-white border-white/30 focus:border-white focus:ring-2 focus:ring-white/20 h-12"
+                  />
+                  <Button
+                    type="submit"
+                    className="bg-white text-blue-600 hover:bg-blue-50 transition-colors duration-300 h-12 px-8 font-medium"
+                  >
+                    Start Coding Now
+                  </Button>
+                </form>
+              </div>
             </CardContent>
           </Card>
         </motion.section>
       </main>
 
-      <footer className="container mx-auto py-8 text-center text-gray-600">
-        <p>&copy; 2024 Runlite. All rights reserved.</p>
+      <footer className="py-8 text-center">
+        <p className="text-gray-600">
+          &copy; 2024 Runlite. All rights reserved.
+        </p>
       </footer>
     </ScrollArea>
   );

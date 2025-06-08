@@ -6,15 +6,13 @@ import { AppDispatch, RootState } from "@/store";
 import { getKeys, deleteKey, generateKey } from "@/store/thunks/keys";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-
 import { ApiKeyTable } from "./components/ApiKeyTable";
 import { CreateApiKeyDialog } from "./components/createApiDialog";
 import { NewApiKeyDialog } from "./components/apikeyDialog";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Plus, RefreshCcw } from "lucide-react";
 import { Version } from "@/types/schema";
+
 const APIManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { keys, isLoading, error, generateLoad } = useSelector(
@@ -76,21 +74,24 @@ const APIManagement: React.FC = () => {
   );
 
   return (
-    <Card className="mx-auto max-w-7xl border-none shadow-none">
-      <CardHeader>
-        <AlertSection />
-        <div className="flex justify-between items-center gap-2 ml-auto">
-          <CreateApiButton
-            onClick={() => setCreateDialogOpen(true)}
-            isLoading={generateLoad}
-          />
-          <RefreshButton
-            onClick={() => dispatch(getKeys())}
-            isLoading={isLoading}
-          />
+    <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">API Keys</h1>
+          <div className="flex items-center gap-3">
+            <CreateApiButton
+              onClick={() => setCreateDialogOpen(true)}
+              isLoading={generateLoad}
+            />
+            <RefreshButton
+              onClick={() => dispatch(getKeys())}
+              isLoading={isLoading}
+            />
+          </div>
         </div>
-      </CardHeader>
-      <CardContent>
+        <AlertSection />
+      </div>
+      <div className="bg-white dark:bg-gray-800 rounded-lg">
         <ApiKeyTable
           keys={keys}
           isLoading={isLoading}
@@ -98,7 +99,7 @@ const APIManagement: React.FC = () => {
           deletingKeys={deletingKeys}
           onDeleteKey={handleDeleteKey}
         />
-      </CardContent>
+      </div>
       <CreateApiKeyDialog
         open={createDialogOpen}
         onOpenChange={setCreateDialogOpen}
@@ -110,60 +111,68 @@ const APIManagement: React.FC = () => {
         setOpen={setNewKeyDialogOpen}
         apiKey={newApiKey}
       />
-    </Card>
+    </div>
   );
 };
 
 const AlertSection: React.FC = () => (
-  <motion.div
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    <Alert variant="default" className="mb-4">
-      <AlertTriangle className="h-4 w-4" />
-      <AlertDescription>
-        As an owner of this project, you can view and manage all API keys in
-        this project.
-      </AlertDescription>
-    </Alert>
-    <Alert variant="destructive">
-      <AlertTriangle className="h-4 w-4" />
-      <AlertDescription>
-        Do not share your API key with others, or expose it in the browser or
-        other client-side code. In order to protect the security of your
-        account, Runlite may also automatically disable any API key that has
-        leaked publicly.
-      </AlertDescription>
-    </Alert>
-    <p className="mt-4 text-sm text-gray-600">
+  <div className="space-y-4">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800"
+    >
+      <div className="flex gap-2 text-blue-700 dark:text-blue-300">
+        <AlertTriangle className="h-5 w-5 flex-shrink-0" />
+        <p className="text-sm">
+          As an owner of this project, you can view and manage all API keys in this project.
+        </p>
+      </div>
+    </motion.div>
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.1 }}
+      className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-100 dark:border-red-800"
+    >
+      <div className="flex gap-2 text-red-700 dark:text-red-300">
+        <AlertTriangle className="h-5 w-5 flex-shrink-0" />
+        <p className="text-sm">
+          Do not share your API key with others, or expose it in the browser or other client-side code. 
+          In order to protect the security of your account, Runlite may also automatically disable any API key that has leaked publicly.
+        </p>
+      </div>
+    </motion.div>
+    <motion.p 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+      className="text-sm text-gray-600 dark:text-gray-400"
+    >
       View usage per API key on the{" "}
-      <a href="/usage" className="text-blue-600 hover:underline">
+      <a href="/usage" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors">
         Usage page
       </a>
       .
-    </p>
-  </motion.div>
+    </motion.p>
+  </div>
 );
 
 const CreateApiButton: React.FC<{
   onClick: () => void;
   isLoading: boolean;
 }> = ({ onClick, isLoading }) => (
-  <motion.div
-    className="ml-auto"
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
+  <Button
+    onClick={onClick}
+    className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white transition-all duration-200 px-4 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50"
+    disabled={isLoading}
   >
-    <Button
-      onClick={onClick}
-      className="bg-green-600 hover:bg-green-700 text-white"
-      disabled={isLoading}
-    >
-      <Plus className="mr-2 h-4 w-4" /> Create New API
-    </Button>
-  </motion.div>
+    <Plus className="h-4 w-4" />
+    <span>Create API Key</span>
+  </Button>
 );
+
 const RefreshButton = ({
   onClick,
   isLoading,
@@ -174,29 +183,16 @@ const RefreshButton = ({
   return (
     <Button
       variant="outline"
-      size="sm"
+      size="default"
       onClick={onClick}
       disabled={isLoading}
-      className={`
-        flex 
-        items-center 
-        gap-2 
-        transition-all 
-        duration-200
-        hover:shadow-md
-        ${isLoading ? "opacity-70" : "opacity-100"}
-      `}
+      className="text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200 px-4 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50"
     >
       <RefreshCcw
         size={16}
-        className={`
-          ${isLoading ? "animate-spin" : "animate-none"}
-          transition-transform
-          duration-300
-          group-hover:rotate-180
-        `}
+        className={`${isLoading ? "animate-spin" : ""} transition-transform duration-300`}
       />
-      <span className="hidden sm:inline">Refresh Keys</span>
+      <span>Refresh</span>
     </Button>
   );
 };

@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { getLogs } from "@/store/thunks/usage";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { CardTitle } from "@/components/ui/card";
 
 interface SortConfig {
   key: keyof Logs;
@@ -59,13 +59,13 @@ const EventLogsTable: React.FC = () => {
   const { logs, isLoading } = useSelector((state: RootState) => state.usage);
   const { user } = useAuth();
   const TableSkeleton = () => (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {Array.from({ length: SKELETON_ROWS }).map((_, idx) => (
         <div key={idx} className="flex space-x-4">
-          <Skeleton className="h-12 w-[100px]" />
-          <Skeleton className="h-12 w-[150px]" />
-          <Skeleton className="h-12 w-[400px]" />
-          <Skeleton className="h-12 w-[200px]" />
+          <Skeleton className="h-12 w-[100px] bg-gray-100 dark:bg-gray-800" />
+          <Skeleton className="h-12 w-[150px] bg-gray-100 dark:bg-gray-800" />
+          <Skeleton className="h-12 w-[400px] bg-gray-100 dark:bg-gray-800" />
+          <Skeleton className="h-12 w-[200px] bg-gray-100 dark:bg-gray-800" />
         </div>
       ))}
     </div>
@@ -176,25 +176,32 @@ const EventLogsTable: React.FC = () => {
   };
 
   return (
-    <Card className="max-w-7xl border-none shadow-none">
-      <CardHeader>
-        <div className="relative">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search in logs..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-8 max-w-sm bg-background"
-          />
+    <div className="p-6 min-h-screen">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            Event Logs
+          </CardTitle>
+          <div className="relative w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
+            <Input
+              placeholder="Search in logs..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9 w-full bg-transparent border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-blue-500 dark:focus:ring-blue-400"
+            />
+          </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="rounded-md border">
+
+        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="border-b border-gray-200 dark:border-gray-700">
                 {COLUMNS.map((column) => (
-                  <TableHead key={column.key} className={column.width}>
+                  <TableHead
+                    key={column.key}
+                    className={`${column.width} text-gray-600 dark:text-gray-300`}
+                  >
                     <div className="flex items-center space-x-2">
                       <span>{column.label}</span>
                       {column.sortable && (
@@ -202,7 +209,7 @@ const EventLogsTable: React.FC = () => {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleSort(column.key)}
-                          className="ml-2 h-8 w-8 p-0 hover:bg-muted"
+                          className="ml-2 h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
                         >
                           <ArrowUpDown className="h-4 w-4" />
                         </Button>
@@ -223,7 +230,7 @@ const EventLogsTable: React.FC = () => {
                 <TableRow>
                   <TableCell
                     colSpan={COLUMNS.length}
-                    className="h-24 text-center text-muted-foreground"
+                    className="h-32 text-center text-gray-500 dark:text-gray-400"
                   >
                     No logs found
                   </TableCell>
@@ -232,20 +239,24 @@ const EventLogsTable: React.FC = () => {
                 paginatedLogs.map((log) => (
                   <TableRow
                     key={log.id}
-                    className="hover:bg-muted/50 transition-colors"
+                    className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors border-b border-gray-200 dark:border-gray-700"
                   >
-                    <TableCell className="font-medium">{log.id}</TableCell>
+                    <TableCell className="font-medium text-gray-900 dark:text-gray-100">
+                      {log.id}
+                    </TableCell>
                     <TableCell>
-                      <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium bg-primary/10 text-primary">
+                      <span className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
                         {log.action}
                       </span>
                     </TableCell>
                     <TableCell>
-                      <pre className="text-sm whitespace-pre-wrap bg-muted p-2 rounded-md">
+                      <pre className="text-sm whitespace-pre-wrap bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 p-2.5 rounded-md border border-gray-200 dark:border-gray-700">
                         {formatDetails(log.details)}
                       </pre>
                     </TableCell>
-                    <TableCell>{formatDate(log.createdAt)}</TableCell>
+                    <TableCell className="text-gray-600 dark:text-gray-300">
+                      {formatDate(log.createdAt)}
+                    </TableCell>
                   </TableRow>
                 ))
               )}
@@ -254,15 +265,18 @@ const EventLogsTable: React.FC = () => {
         </div>
 
         {paginatedLogs.length > 0 && (
-          <div className="mt-4 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className={`${
-                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                    } hover:bg-muted`}
+                    className={`
+                      ${currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                      hover:bg-gray-100 dark:hover:bg-gray-800 
+                      text-gray-700 dark:text-gray-300
+                      border border-gray-200 dark:border-gray-700
+                    `}
                   />
                 </PaginationItem>
                 {renderPaginationLinks()}
@@ -271,19 +285,20 @@ const EventLogsTable: React.FC = () => {
                     onClick={() =>
                       setCurrentPage((p) => Math.min(totalPages, p + 1))
                     }
-                    className={`${
-                      currentPage === totalPages
-                        ? "pointer-events-none opacity-50"
-                        : ""
-                    } hover:bg-muted`}
+                    className={`
+                      ${currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                      hover:bg-gray-100 dark:hover:bg-gray-800 
+                      text-gray-700 dark:text-gray-300
+                      border border-gray-200 dark:border-gray-700
+                    `}
                   />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

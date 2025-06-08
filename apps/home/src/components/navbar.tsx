@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import GitHubStarButton from "@/components/githubStar";
@@ -9,37 +9,49 @@ import GitHubStarButton from "@/components/githubStar";
 const menuItems = [
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
-  { name: "Docs", href: "https://console.runlite.app/docs" },
-  { name: "Playground", href: "https://console.runlite.app/playground" },
+  { name: "Docs", href: "https://console.runlite.app/docs", isExternal: true },
+  {
+    name: "Playground",
+    href: "https://console.runlite.app/playground",
+    isExternal: true,
+  },
 ];
 
 const NavbarItem = ({
   name,
   href,
+  isExternal,
   onClick,
 }: {
   name: string;
   href: string;
+  isExternal?: boolean;
   onClick: () => void;
 }) => (
   <motion.li
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
     className="relative"
   >
-    <Link href={href}>
-      <p
-        className="text-gray-600 hover:text-blue-600 transition-colors duration-200 py-2"
+    <Link href={href} target={isExternal ? "_blank" : undefined}>
+      <motion.div
+        className="relative px-3 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300"
         onClick={onClick}
       >
-        {name}
-        <motion.span
-          className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"
-          initial={{ scaleX: 0 }}
-          whileHover={{ scaleX: 1 }}
-          transition={{ duration: 0.2 }}
+        <span className="flex items-center gap-1.5 relative z-10">
+          {name}
+          {isExternal && (
+            <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+          )}
+        </span>
+        <motion.div
+          className="absolute inset-0 rounded-lg bg-white/0 dark:bg-white/0 transition-colors duration-300"
+          whileHover={{
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(8px)",
+          }}
         />
-      </p>
+      </motion.div>
     </Link>
   </motion.li>
 );
@@ -47,10 +59,16 @@ const NavbarItem = ({
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
+    if (latest > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
     if (!previous) return;
     if (latest > previous && latest > 150) {
       setHidden(true);
@@ -75,80 +93,170 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 bg-transparent backdrop-blur-md z-50"
+      className="fixed top-0 left-0 right-0 z-50"
       initial={false}
       animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
       variants={{
-        visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: "-100%" },
+        visible: {
+          opacity: 1,
+          y: 0,
+          backgroundColor: isScrolled
+            ? "rgba(255, 255, 255, 0.5)"
+            : "transparent",
+          backdropFilter: isScrolled ? "blur(16px)" : "none",
+        },
+        hidden: {
+          opacity: 0,
+          y: "-100%",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(16px)",
+        },
       }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
+      {/* Gradient Border - Only visible when scrolled */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[1px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isScrolled ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200/20 dark:via-gray-700/20 to-transparent" />
+      </motion.div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <motion.div
             className="flex items-center"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <Link href="/" className="flex items-center">
-              <Logo />
-              <h1 className="font-sans text-4xl font-bold bg-gradient-to-r from-gray-600 to-gray-700 text-transparent bg-clip-text p-2 transition-all duration-300 ease-in-out hover:from-blue-600 hover:to-blue-800">
+            <Link href="/" className="flex items-center group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                <Logo />
+              </div>
+              <h1 className="font-sans text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-200 text-transparent bg-clip-text p-2 transition-all duration-300 ease-in-out group-hover:from-blue-600 group-hover:to-purple-600">
                 Run
-                <span className="relative">
-                  <span className="absolute top-1 left-0 text-sm text-blue-400 transform -rotate-12">
-                    Lite
-                  </span>
+                <span className="text-base bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text">
+                  Lite
                 </span>
               </h1>
             </Link>
           </motion.div>
 
           <div className="hidden md:block">
-            <ul className="max-w-fit mx-auto border border-transparent dark:border-white/[0.2] rounded-full dark:bg-black bg-white px-5 py-1 flex  items-center justify-center space-x-4 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] ">
+            <motion.ul
+              className="flex items-center space-x-2"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
               {menuItems.map((item) => (
                 <NavbarItem key={item.name} {...item} onClick={closeMenu} />
               ))}
-            </ul>
+            </motion.ul>
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
-            <GitHubStarButton owner="ajaysehwal" repo="runlite" />
+          <div className="hidden md:flex items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              <GitHubStarButton owner="ajaysehwal" repo="runlite" />
+            </motion.div>
           </div>
 
-          <div className="md:hidden">
+          <motion.div
+            className="md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Button
               variant="ghost"
               size="icon"
               onClick={toggleMenu}
+              className="relative group"
               aria-label="Toggle menu"
             >
-              {isOpen ? <X /> : <Menu />}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"
+                animate={{ scale: isOpen ? 1.1 : 1 }}
+              />
+              <motion.div
+                animate={isOpen ? "open" : "closed"}
+                variants={{
+                  open: { rotate: 180, scale: 1 },
+                  closed: { rotate: 0, scale: 1 },
+                }}
+                transition={{ duration: 0.3 }}
+                className="relative"
+              >
+                {isOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </motion.div>
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       <motion.div
-        className="md:hidden"
+        className="md:hidden overflow-hidden"
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={{
-          open: { opacity: 1, height: "auto" },
-          closed: { opacity: 0, height: 0 },
+          open: {
+            height: "auto",
+            opacity: 1,
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            backdropFilter: "blur(16px)",
+          },
+          closed: {
+            height: 0,
+            opacity: 0,
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            backdropFilter: "blur(16px)",
+          },
         }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-          {menuItems.map((item) => (
-            <a
+        <div className="px-4 py-3 space-y-1">
+          {menuItems.map((item, index) => (
+            <motion.div
               key={item.name}
-              href={item.href}
-              className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-              onClick={closeMenu}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="block"
             >
-              {item.name}
-            </a>
+              <Link
+                href={item.href}
+                target={item.isExternal ? "_blank" : undefined}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-white/10 transition-all duration-300"
+                onClick={closeMenu}
+              >
+                {item.name}
+                {item.isExternal && (
+                  <ExternalLink className="w-4 h-4 opacity-50" />
+                )}
+              </Link>
+            </motion.div>
           ))}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: menuItems.length * 0.1 }}
+            className="pt-2"
+          >
+            <GitHubStarButton owner="ajaysehwal" repo="runlite" />
+          </motion.div>
         </div>
       </motion.div>
     </motion.nav>

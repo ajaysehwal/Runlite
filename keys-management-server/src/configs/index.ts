@@ -91,7 +91,7 @@ export class Config {
     } as const;
   }
   public get<K extends keyof ReturnType<Config["getConfig"]>>(
-    key: K,
+    key: K
   ): ReturnType<Config["getConfig"]>[K] {
     return this.getConfig()[key];
   }

@@ -8,14 +8,14 @@ import { Button } from "./ui/button";
 import {
   Book,
   ChartNoAxesColumn,
-  LockKeyhole,
+  KeyRound,
   LifeBuoy,
-  // Settings2,
-  SquareTerminal,
-  // SquareUser,
-  Logs
+  Terminal,
+  ScrollText,
 } from "lucide-react";
 import { Logo } from "./logo";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface NavItem {
   icon: React.ReactNode;
@@ -25,41 +25,38 @@ interface NavItem {
 
 const mainNavItems: NavItem[] = [
   {
-    icon: <SquareTerminal className="size-5" />,
+    icon: <Terminal className="size-4" />,
     label: "Playground",
     href: "/playground",
   },
-
   {
-    icon: <LockKeyhole className="size-5" />,
+    icon: <KeyRound className="size-4" />,
     label: "API Keys",
     href: "/api-keys",
   },
-  { icon: <Book className="size-5" />, label: "Documentation", href: "/docs" },
   {
-    icon: <ChartNoAxesColumn className="size-5" />,
+    icon: <Book className="size-4" />,
+    label: "Documentation",
+    href: "/docs",
+  },
+  {
+    icon: <ChartNoAxesColumn className="size-4" />,
     label: "Usage",
     href: "/usage",
   },
   {
-    icon: <Logs  className="size-5" />,
+    icon: <ScrollText className="size-4" />,
     label: "Events Logs",
     href: "/logs",
   },
-  // {
-  //   icon: <Settings2 className="size-5" />,
-  //   label: "Settings",
-  //   href: "/settings",
-  // },
 ];
 
 const bottomNavItems: NavItem[] = [
-  { icon: <LifeBuoy className="size-5" />, label: "Help", href: "/help" },
-  // {
-  //   icon: <SquareUser className="size-5" />,
-  //   label: "Account",
-  //   href: "/account",
-  // },
+  {
+    icon: <LifeBuoy className="size-4" />,
+    label: "Help",
+    href: "/help",
+  },
 ];
 
 const NavButton: React.FC<NavItem & { isActive: boolean }> = ({
@@ -69,45 +66,75 @@ const NavButton: React.FC<NavItem & { isActive: boolean }> = ({
   isActive,
 }) => (
   <Tooltip>
-  <TooltipTrigger asChild>
-    <Button
-      variant="ghost"
-      size="icon"
-      className={`
-        rounded-lg transition-all duration-200 ease-in-out
-        ${isActive 
-          ? "bg-[rgb(63,132,246)] text-white shadow-lg backdrop-blur-sm hover:bg-blue-400 hover:text-gray-100" 
-          : "text-gray-600 hover:bg-white/10 hover:text-gray-500"
-        }
-      `}
-      aria-label={label}
-      asChild
+    <TooltipTrigger asChild>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn(
+          "relative h-9 w-9 rounded-lg",
+          "transition-all duration-200",
+          isActive &&
+            "after:absolute after:right-0 after:h-4 after:w-0.5 after:translate-x-1 after:rounded-full after:bg-blue-500",
+          isActive
+            ? "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400"
+            : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+        )}
+        aria-label={label}
+        asChild
+      >
+        <Link href={href}>
+          {isActive ? (
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {icon}
+            </motion.div>
+          ) : (
+            icon
+          )}
+        </Link>
+      </Button>
+    </TooltipTrigger>
+    <TooltipContent
+      side="right"
+      sideOffset={8}
+      className={cn(
+        "rounded-lg px-3 py-1.5",
+        "bg-white/95 text-sm font-medium text-slate-900",
+        "dark:bg-slate-900/95 dark:text-slate-100",
+        "border border-slate-200/50 dark:border-slate-700/50",
+        "shadow-lg backdrop-blur-sm"
+      )}
     >
-      <Link href={href}>{icon}</Link>
-    </Button>
-  </TooltipTrigger>
-  <TooltipContent 
-    side="right" 
-    sideOffset={5}
-    className="bg-white/90 backdrop-blur-sm"
-  >
-    {label}
-  </TooltipContent>
-</Tooltip>
-
+      {label}
+    </TooltipContent>
+  </Tooltip>
 );
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-20 flex h-full w-16 flex-col  bg-white">
-      <div className="border-b p-2">
-      <Button 
-          variant="ghost" 
-          size="icon" 
-          aria-label="Home" 
-          className="w-full bg-white/10 hover:bg-white/20 transition-colors"
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-20",
+        "flex h-full w-14",
+        "flex-col",
+        "backdrop-blur-sm"
+      )}
+    >
+      <div className="flex h-14 items-center justify-center border-b border-slate-200 dark:border-slate-800">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Home"
+          className={cn(
+            "h-9 w-9 rounded-lg",
+            "hover:bg-slate-100 dark:hover:bg-slate-800",
+            "transition-colors duration-200"
+          )}
           asChild
         >
           <Link href="/">
@@ -115,7 +142,7 @@ export default function Sidebar() {
           </Link>
         </Button>
       </div>
-      <nav className="grid gap-1 p-2">
+      <nav className="flex flex-1 flex-col gap-2 p-2">
         {mainNavItems.map((item) => (
           <NavButton
             key={item.href}
@@ -124,7 +151,7 @@ export default function Sidebar() {
           />
         ))}
       </nav>
-      <nav className="mt-auto grid gap-1 p-2">
+      <nav className="flex flex-col gap-2 p-2 pb-4">
         {bottomNavItems.map((item) => (
           <NavButton
             key={item.href}

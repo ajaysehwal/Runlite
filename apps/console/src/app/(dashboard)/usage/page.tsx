@@ -190,8 +190,8 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
   if (!active || !payload) return null;
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
-      <p className="font-medium text-gray-900">{label}</p>
+    <div className="p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+      <p className="font-medium text-gray-900 dark:text-gray-100">{label}</p>
       {payload.map((entry, index) => (
         <p key={index} style={{ color: entry.color }} className="text-sm">
           {entry.name || entry.dataKey}: {entry.value}
@@ -206,10 +206,12 @@ interface HourlyChartProps {
 }
 
 const HourlyChart: React.FC<HourlyChartProps> = ({ data }) => (
-  <Card className="bg-white border border-gray-200 shadow-sm col-span-2">
+  <Card className="border-none shadow-none">
     <CardHeader>
-      <CardTitle>Hourly Usage Distribution</CardTitle>
-      <CardDescription>
+      <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        Hourly Usage Distribution
+      </CardTitle>
+      <CardDescription className="text-gray-500 dark:text-gray-400">
         Breakdown of cached vs uncached requests by hour
       </CardDescription>
     </CardHeader>
@@ -230,9 +232,9 @@ const HourlyChart: React.FC<HourlyChartProps> = ({ data }) => (
                 <stop offset="95%" stopColor="#34d399" stopOpacity={0.1} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis dataKey="hour" stroke="#94a3b8" fontSize={12} />
-            <YAxis stroke="#94a3b8" fontSize={12} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" className="dark:stroke-gray-700" />
+            <XAxis dataKey="hour" stroke="#94a3b8" fontSize={12} className="dark:stroke-gray-400" />
+            <YAxis stroke="#94a3b8" fontSize={12} className="dark:stroke-gray-400" />
             <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
@@ -262,10 +264,12 @@ interface MonthlyChartProps {
 }
 
 const MonthlyChart: React.FC<MonthlyChartProps> = ({ data }) => (
-  <Card className="bg-white border border-gray-200 shadow-sm col-span-2">
+  <Card className="border-none shadow-none">
     <CardHeader>
-      <CardTitle>Monthly Usage Trend</CardTitle>
-      <CardDescription>
+      <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        Monthly Usage Trend
+      </CardTitle>
+      <CardDescription className="text-gray-500 dark:text-gray-400">
         Total requests per month with cache breakdown
       </CardDescription>
     </CardHeader>
@@ -273,9 +277,9 @@ const MonthlyChart: React.FC<MonthlyChartProps> = ({ data }) => (
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis dataKey="month" stroke="#94a3b8" fontSize={12} />
-            <YAxis stroke="#94a3b8" fontSize={12} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" className="dark:stroke-gray-700" />
+            <XAxis dataKey="month" stroke="#94a3b8" fontSize={12} className="dark:stroke-gray-400" />
+            <YAxis stroke="#94a3b8" fontSize={12} className="dark:stroke-gray-400" />
             <Tooltip content={<CustomTooltip />} />
             <Line
               type="monotone"
@@ -321,34 +325,40 @@ const CacheStatsCard: React.FC<CacheStatsCardProps> = ({
   const cacheRate = total > 0 ? ((cacheCount / total) * 100).toFixed(1) : "0";
 
   return (
-    <Card className="bg-white border border-gray-200 shadow-sm">
+    <Card className="border-none shadow-none">
       <CardHeader>
-        <CardTitle>Cache Statistics</CardTitle>
-        <CardDescription>Overview of cache performance</CardDescription>
+        <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          Cache Statistics
+        </CardTitle>
+        <CardDescription className="text-gray-500 dark:text-gray-400">
+          Overview of cache performance
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div>
-            <p className="text-sm text-gray-500">Cache Hit Rate</p>
-            <p className="text-2xl font-bold text-green-500">{cacheRate}%</p>
+        <div className="space-y-6">
+          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+            <p className="text-sm text-gray-600 dark:text-gray-300">Cache Hit Rate</p>
+            <p className="text-3xl font-bold text-green-500 dark:text-green-400">{cacheRate}%</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-500">Cached Requests</p>
-              <p className="text-xl font-semibold text-green-600">
-                {cacheCount}
+            <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
+              <p className="text-sm text-gray-600 dark:text-gray-300">Cached Requests</p>
+              <p className="text-2xl font-semibold text-green-600 dark:text-green-400">
+                {cacheCount.toLocaleString()}
               </p>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">Uncached Requests</p>
-              <p className="text-xl font-semibold text-indigo-600">
-                {uncacheCount}
+            <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
+              <p className="text-sm text-gray-600 dark:text-gray-300">Uncached Requests</p>
+              <p className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+                {uncacheCount.toLocaleString()}
               </p>
             </div>
           </div>
-          <div>
-            <p className="text-sm text-gray-500">Total Requests</p>
-            <p className="text-xl font-semibold text-purple-600">{total}</p>
+          <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
+            <p className="text-sm text-gray-600 dark:text-gray-300">Total Requests</p>
+            <p className="text-2xl font-semibold text-purple-600 dark:text-purple-400">
+              {total.toLocaleString()}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -372,29 +382,30 @@ const Usage: React.FC = () => {
     [usage]
   );
   React.useEffect(() => {
-    if(user){
+    if (user) {
       dispatch(getApiUsage());
     }
-  }, [dispatch,user]);
+  }, [dispatch, user]);
 
   return (
-    <div className="p-6 bg-white text-gray-800">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+    <div className="p-6 min-h-screen">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <Tabs
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
+            className="w-full sm:w-auto"
           >
-            <TabsList className="grid w-[200px] grid-cols-2 bg-gray-100">
-              <TabsTrigger
+            <TabsList className="grid w-[200px] grid-cols-2 bg-gray-100 dark:bg-gray-800">
+              <TabsTrigger 
                 value="activity"
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
               >
                 Activity
               </TabsTrigger>
-              <TabsTrigger
+              <TabsTrigger 
                 value="cost"
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
               >
                 Cost
               </TabsTrigger>
@@ -404,10 +415,10 @@ const Usage: React.FC = () => {
             value={timeRange}
             onValueChange={(value: TimeRange) => setTimeRange(value)}
           >
-            <SelectTrigger className="w-[180px] bg-white border-gray-300">
+            <SelectTrigger className="w-full sm:w-[180px] border-gray-200 dark:border-gray-700 bg-transparent">
               <SelectValue placeholder="Select time range" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-gray-300">
+            <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
               <SelectItem value="1m">Last Month</SelectItem>
               <SelectItem value="3m">Last 3 Months</SelectItem>
               <SelectItem value="6m">Last 6 Months</SelectItem>
@@ -423,9 +434,10 @@ const Usage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
+            className="space-y-6"
           >
             <Tabs value={activeTab}>
-              <TabsContent value="activity">
+              <TabsContent value="activity" className="m-0">
                 <div className="grid gap-6 md:grid-cols-3">
                   <HourlyChart data={hourlyData} />
                   <CacheStatsCard
@@ -435,14 +447,18 @@ const Usage: React.FC = () => {
                   <MonthlyChart data={monthlyData} />
                 </div>
               </TabsContent>
-              <TabsContent value="cost">
+              <TabsContent value="cost" className="m-0">
                 <div className="grid gap-6 md:grid-cols-3">
-                  <Card className="bg-white border border-gray-200 shadow-sm col-span-2">
+                  <Card className="col-span-2 border-none shadow-none">
                     <CardHeader>
-                      <CardTitle>Cost Analysis</CardTitle>
-                      <CardDescription>Coming soon</CardDescription>
+                      <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                        Cost Analysis
+                      </CardTitle>
+                      <CardDescription className="text-gray-500 dark:text-gray-400">
+                        Coming soon
+                      </CardDescription>
                     </CardHeader>
-                    <CardContent className="h-[300px] flex items-center justify-center text-gray-400">
+                    <CardContent className="h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500">
                       Cost analysis features will be added here
                     </CardContent>
                   </Card>

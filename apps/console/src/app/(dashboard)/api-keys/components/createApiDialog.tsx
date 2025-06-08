@@ -54,7 +54,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
     <AnimatePresence>
       {open && (
         <Dialog open={open} onOpenChange={onOpenChange}>
-          <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 rounded-lg shadow-xl">
+          <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -62,7 +62,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
               transition={{ duration: 0.3 }}
             >
               <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+                <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   Create New API
                 </DialogTitle>
                 <DialogDescription className="text-gray-500 dark:text-gray-400">
@@ -83,7 +83,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
                     onChange={(e) =>
                       setApiForm({ ...apiForm, name: e.target.value })
                     }
-                    className="col-span-3 bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="col-span-3 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 rounded-md focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-gray-900 dark:text-gray-100"
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -92,7 +92,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
                     className="text-right text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     Description{" "}
-                    <span className="text-[10px] text-gray-400">
+                    <span className="text-[10px] text-gray-400 dark:text-gray-500">
                       (optional)
                     </span>
                   </Label>
@@ -102,7 +102,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
                     onChange={(e) =>
                       setApiForm({ ...apiForm, desc: e.target.value })
                     }
-                    className="col-span-3 bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="col-span-3 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 rounded-md focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-gray-900 dark:text-gray-100"
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -118,12 +118,16 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
                       setApiForm({ ...apiForm, version: value as Version })
                     }
                   >
-                    <SelectTrigger className="col-span-3 bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <SelectTrigger className="col-span-3 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 rounded-md focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-gray-900 dark:text-gray-100">
                       <SelectValue placeholder="Select API version" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                       {apiVersions.map((version) => (
-                        <SelectItem key={version.value} value={version.value}>
+                        <SelectItem
+                          key={version.value}
+                          value={version.value}
+                          className="text-gray-900 dark:text-gray-100"
+                        >
                           <span className="font-medium">{version.label}</span>
                           <span className="text-sm text-gray-500 dark:text-gray-400 block">
                             {version.description}
@@ -137,7 +141,7 @@ export const CreateApiKeyDialog: React.FC<CreateApiKeyDialogProps> = ({
               <DialogFooter>
                 <Button
                   onClick={handleSubmit}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white transition-colors duration-200 ease-in-out"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white transition-colors duration-200 ease-in-out disabled:opacity-50"
                   disabled={isLoading}
                 >
                   {isLoading ? (

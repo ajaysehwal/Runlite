@@ -52,7 +52,7 @@ export const ApiKeyTable: React.FC<ApiKeyTableProps> = ({
     if (error) {
       return (
         <TableRow>
-          <TableCell colSpan={6} className="text-center text-red-500">
+          <TableCell colSpan={6} className="text-center text-red-500 dark:text-red-400">
             Error loading API keys. Please try again later.
           </TableCell>
         </TableRow>
@@ -62,7 +62,7 @@ export const ApiKeyTable: React.FC<ApiKeyTableProps> = ({
     if (keys.length === 0) {
       return (
         <TableRow>
-          <TableCell colSpan={6} className="text-center">
+          <TableCell colSpan={6} className="text-center text-gray-500 dark:text-gray-400">
             No API keys found. Create one to get started.
           </TableCell>
         </TableRow>
@@ -70,30 +70,37 @@ export const ApiKeyTable: React.FC<ApiKeyTableProps> = ({
     }
 
     return keys.map((key: ApiKey) => (
-      <motion.tr key={key.id} {...fadeInUp} transition={{ duration: 0.2 }}>
-        <TableCell className="font-medium">{key.name}</TableCell>
-        <TableCell>{key.description}</TableCell>
-        <TableCell>{key.version==Version.V1?"v1.0.0":""}</TableCell>
-
-        <TableCell className="flex gap-1 items-center">
-          {key.status === Status.ACTIVE ? (
-            <>
-              Active
-              <CheckCircle className="h-5 w-5 text-green-500" />
-            </>
-          ) : (
-            <>
-              Deactive <XCircle className="h-5 w-5 text-red-500" />
-            </>
-          )}
+      <motion.tr 
+        key={key.id} 
+        {...fadeInUp} 
+        transition={{ duration: 0.2 }}
+        className="border-b border-gray-100 dark:border-gray-700"
+      >
+        <TableCell className="font-medium text-gray-900 dark:text-gray-100">{key.name}</TableCell>
+        <TableCell className="text-gray-600 dark:text-gray-300">{key.description}</TableCell>
+        <TableCell className="text-gray-600 dark:text-gray-300">{key.version==Version.V1?"v1.0.0":""}</TableCell>
+        <TableCell>
+          <div className="flex items-center gap-1">
+            {key.status === Status.ACTIVE ? (
+              <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                <span>Active</span>
+                <CheckCircle className="h-4 w-4" />
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 text-red-600 dark:text-red-400">
+                <span>Inactive</span>
+                <XCircle className="h-4 w-4" />
+              </div>
+            )}
+          </div>
         </TableCell>
-        <TableCell>{makeDateReadable(key.createdAt)}</TableCell>
+        <TableCell className="text-gray-600 dark:text-gray-300">{makeDateReadable(key.createdAt)}</TableCell>
         <TableCell>
           <Button
             variant="destructive"
             size="sm"
             onClick={() => onDeleteKey(key.id)}
-            className="bg-white text-red-500 hover:bg-white hover:border-red-400 border"
+            className="bg-white dark:bg-gray-800 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 border border-red-200 dark:border-red-800 hover:border-red-300 dark:hover:border-red-700 transition-colors"
             disabled={deletingKeys[key.id]}
           >
             {deletingKeys[key.id] ? (
@@ -113,17 +120,18 @@ export const ApiKeyTable: React.FC<ApiKeyTableProps> = ({
       animate="animate"
       exit="exit"
       variants={fadeInUp}
+      className="w-full"
     >
       <ScrollArea className="h-[250px] rounded-md w-full">
-        <Table className="w-full">
+        <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Version</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Created At</TableHead>
-              <TableHead>Actions</TableHead>
+            <TableRow className="border-b border-gray-200 dark:border-gray-700">
+              <TableHead className="text-gray-700 dark:text-gray-300">Name</TableHead>
+              <TableHead className="text-gray-700 dark:text-gray-300">Description</TableHead>
+              <TableHead className="text-gray-700 dark:text-gray-300">Version</TableHead>
+              <TableHead className="text-gray-700 dark:text-gray-300">Status</TableHead>
+              <TableHead className="text-gray-700 dark:text-gray-300">Created At</TableHead>
+              <TableHead className="text-gray-700 dark:text-gray-300">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -138,22 +146,22 @@ export const ApiKeyTable: React.FC<ApiKeyTableProps> = ({
 const SkeletonRow: React.FC = () => (
   <TableRow>
     <TableCell>
-      <Skeleton className="h-4 w-[200px]" />
+      <Skeleton className="h-4 w-[200px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
     <TableCell>
-      <Skeleton className="h-4 w-[300px]" />
+      <Skeleton className="h-4 w-[300px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
     <TableCell>
-      <Skeleton className="h-4 w-[150px]" />
+      <Skeleton className="h-4 w-[150px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
     <TableCell>
-      <Skeleton className="h-4 w-[50px]" />
+      <Skeleton className="h-4 w-[50px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
     <TableCell>
-      <Skeleton className="h-8 w-[100px]" />
+      <Skeleton className="h-8 w-[100px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
     <TableCell>
-      <Skeleton className="h-4 w-[50px]" />
+      <Skeleton className="h-4 w-[50px] bg-gray-200 dark:bg-gray-700" />
     </TableCell>
   </TableRow>
 );
